@@ -7,11 +7,11 @@ namespace WarehouseManagerS.Controllers
 {
     [ApiController]
     [Route("[Controller]")] // 
-    public class ItemController : ControllerBase
+    public class ItemsController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public ItemController(DataContext context)
+        public ItemsController(DataContext context)
         {
             _context = context;
         }
