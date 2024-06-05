@@ -16,7 +16,7 @@ namespace WarehouseManagerS.Controllers
             _context = context;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Item>>> GetItem() // List of items
+        public async Task<ActionResult<IEnumerable<Item>>> GetItems() // List of items
         {
             var items = await _context.Items.ToListAsync();
             return items;
