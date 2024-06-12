@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WarehouseManagerS.Data;
+using WarehouseManagerS.Interfaces;
+using WarehouseManagerS.Services;
 
 
 namespace WarehouseManagerS
@@ -19,6 +21,8 @@ namespace WarehouseManagerS
                 opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddCors();
+
+            builder.Services.AddScoped<ITokenService, TokenService>();
 
             var app = builder.Build();
 
