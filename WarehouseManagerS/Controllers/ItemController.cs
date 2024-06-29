@@ -31,7 +31,6 @@ namespace WarehouseManagerS.Controllers
         [HttpPost]
         public async Task<ActionResult<Item>> AddItem(Item item)
         {
-            // Domyślnie ID jest 0, aby bazy danych mogła wygenerować nowe ID
             _context.Items.Add(item);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
