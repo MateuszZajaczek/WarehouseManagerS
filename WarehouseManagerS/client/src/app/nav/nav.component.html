@@ -1,24 +1,25 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="#"><h1 class="navbar-title">{{ title }}</h1></a>
-    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Lista produktów</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Zwroty</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Zamówienia</a>
-      </li>
-    </ul>
+    <div class="d-flex align-items-center">
+      <a class="navbar-brand me-3" href="#"><h1 class="navbar-title">{{ title }}</h1></a>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Lista produktów</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Zwroty</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Zamówienia</a>
+        </li>
+      </ul>
+    </div>
     <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex ms-auto" autocomplete="off">
       <input name="username"
              [(ngModel)]="model.username"
              class="form-control me-2"
              placeholder="Username">
-      <input
-             name="password"
+      <input name="password"
              [(ngModel)]="model.password"
              class="form-control me-2"
              placeholder="Password"
