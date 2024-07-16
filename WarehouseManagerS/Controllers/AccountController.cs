@@ -5,16 +5,22 @@ using System.Text;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Dto;
 using WarehouseManagerS.Entities.Users;
+using WarehouseManagerS.Interfaces;
+using WarehouseManagerS.Services;
 
 namespace WarehouseManagerS.Controllers
 {
     public class AccountController : BaseApiController
     {
         private readonly DataContext _context;
+        private readonly ITokenService _tokenservice;
 
-        public AccountController(DataContext context)
+
+        public AccountController(DataContext context, ITokenService tokenService)
+
         {
             _context = context;
+            _tokenservice = tokenService;
         }
 
         [HttpPost("register")] // POST account register
@@ -52,7 +58,16 @@ namespace WarehouseManagerS.Controllers
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized();
             }
 
-            return user;
+            var token = _tokenservice.CreateToken(user);
+
+            var userDto = new UserDto
+            {
+                UserName = user.UserName,
+                Token = token
+            };
+
+
+            return Ok(userDto);
         }
         private async Task<bool> UserExists(string username)
         {
