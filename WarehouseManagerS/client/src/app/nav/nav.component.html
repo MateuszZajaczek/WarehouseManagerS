@@ -2,6 +2,7 @@
   <div class="container">
     <div class="d-flex align-items-center">
       <a class="navbar-brand me-3" href="#"><h1 class="navbar-title">{{ title }}</h1></a>
+      @if (loggedIn) {
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Lista produktów</a>
@@ -13,6 +14,8 @@
           <a class="nav-link active" aria-current="page" href="#">Zamówienia</a>
         </li>
       </ul>
+      }
+
     </div>
     <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex ms-auto" autocomplete="off">
       <input name="username"
