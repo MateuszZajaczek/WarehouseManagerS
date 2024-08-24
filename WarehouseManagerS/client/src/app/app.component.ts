@@ -101,6 +101,7 @@ export class AppComponent implements OnInit {
           this.lastAction = { action: 'delete', item, index };
           const itemsFormArray = this.form.get('items') as FormArray;
           itemsFormArray.removeAt(index);
+          
         },
         error: error => console.log(error)
       });
@@ -143,4 +144,14 @@ export class AppComponent implements OnInit {
     newItemFormGroup.get('category')?.enable();
     itemsFormArray.insert(0, newItemFormGroup);
   }
+
+
+
+  reassignIds(): void {
+    const itemsFormArray = this.form.get('items') as FormArray;
+    itemsFormArray.controls.forEach((group, index) => {
+      (group as FormGroup).get('id')?.setValue(index + 1);
+    });
+  }
+
 }
