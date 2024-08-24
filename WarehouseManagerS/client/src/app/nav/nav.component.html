@@ -13,10 +13,25 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Zamówienia</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">Wyloguj</a> <!--Temporary logout-->
+        </li>
       </ul>
       }
-
     </div>
+    @if(loggedIn){
+    <div class="dropdown">
+      <a class="dropdown-toggle text-light">You're logged in'</a>  <!-- Welcome "username" (later to add)-->
+      <div class="dropdown-menu">
+        <a class="dropdown-item">Edit profile</a>
+        <a class="dropdown-item" (click)="logout()">Logout</a>
+      </div>
+    </div>
+
+    }
+
+
+    @if (!loggedIn){
     <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex ms-auto" autocomplete="off">
       <input name="username"
              [(ngModel)]="model.username"
@@ -29,5 +44,6 @@
              type="password">
       <button class="btn btn-outline-success" type="submit">Login</button>
     </form>
+    }
   </div>
 </nav>
