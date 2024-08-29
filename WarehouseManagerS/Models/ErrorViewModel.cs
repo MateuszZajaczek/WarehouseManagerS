@@ -1,3 +1,5 @@
+#nullable enable
+
 namespace WarehouseManagerS.Models
 {
     public class ErrorViewModel
@@ -7,3 +9,5 @@ namespace WarehouseManagerS.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }
+
+#nullable disable
