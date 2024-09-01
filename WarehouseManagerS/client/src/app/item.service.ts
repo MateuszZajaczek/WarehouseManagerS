@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Item } from './item.model';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class ItemService {
   constructor(private http: HttpClient) { }
 
   getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.apiUrl);
+    return this.http.get<Item[]>(this.apiUrl).pipe(map(item => item.sort((a,b) => b.id - a.id)));
   }
 
   getItem(id: number): Observable<Item> {

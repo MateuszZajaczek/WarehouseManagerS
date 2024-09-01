@@ -20,14 +20,17 @@
       }
     </div>
     @if(loggedIn){
-    <div class="dropdown">
-      <a class="dropdown-toggle text-light">You're logged in'</a>  <!-- Welcome "username" (later to add)-->
-      <div class="dropdown-menu">
+
+
+
+
+    <div dropdown class="dropdown">
+      <a dropdownToggle class="dropdown-toggle text-light cursor-pointer">You're logged in'</a>  <!-- Welcome "username" (later to add)-->
+      <div *dropdownMenu class="dropdown-menu">
         <a class="dropdown-item">Edit profile</a>
         <a class="dropdown-item" (click)="logout()">Logout</a>
       </div>
     </div>
-
     }
 
 

@@ -5,12 +5,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @Component({
   selector: 'app-nav',
-  standalone: true,
-  imports: [FormsModule, BsDropdownModule],
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
+
   title = 'Warehouse Manager';
   private accountService = inject(AccountService)
   loggedIn = false;
@@ -29,6 +28,5 @@ export class NavComponent {
   }
   logout() {
     this.loggedIn = false;
-
   }
 }

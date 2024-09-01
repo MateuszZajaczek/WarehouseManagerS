@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ItemService } from './item.service';
 import { Item } from './item.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { Item } from './item.model';
   styleUrls: ['./app.component.css',]
 })
 export class AppComponent implements OnInit {
-  
+
+  componentDestroyed = new Subject();
   form: FormGroup;
   categories = ['Miscellaneous', 'Tools', 'Electronics', 'Claims'];
   private lastAction: { action: string, item: Item, index: number } | null = null;
@@ -24,8 +26,13 @@ export class AppComponent implements OnInit {
     this.loadItems();
   }
 
+  ngOnDestroy(): void {
+    this.componentDestroyed.next(true);
+    this.componentDestroyed.complete();
+  }
+
   loadItems(): void {
-    this.itemService.getItems().subscribe({
+    this.itemService.getItems().pipe(takeUntil(this.componentDestroyed)).subscribe({
       next: items => {
         const itemsFormArray = this.form.get('items') as FormArray;
         itemsFormArray.clear();
