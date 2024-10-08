@@ -22,3 +22,7 @@ body {
   .navbar-nav .nav-item {
     margin-right: 15px; /* Adjust this value to space out the nav items as needed */
   }
+
+.dropdown-toggle, .dropdown-item {
+  cursor: pointer;
+}
