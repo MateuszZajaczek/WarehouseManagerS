@@ -1,20 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { ItemService } from './item.service';
-import { Item } from './item.model';
+import { ItemService } from './_services/item.service';
+import { Item } from './_models/item';
 import { Subject, takeUntil } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { RouterOutlet } from '@angular/router';
+import { NavComponent } from './nav/nav.component';
+import { AccountService } from './_services/account.service';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css',]
+  styleUrls: ['./app.component.css',],
+  imports: [RouterOutlet, NavComponent]
 })
 export class AppComponent implements OnInit {
-
   componentDestroyed = new Subject();
   form: FormGroup;
   categories = ['Miscellaneous', 'Tools', 'Electronics', 'Claims'];
   private lastAction: { action: string, item: Item, index: number } | null = null;
+  http = inject(HttpClient);
+  private accountService = inject(AccountService);
+  users: any;
 
   constructor(private itemService: ItemService, private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -24,11 +32,27 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadItems();
+    this.getUsers();
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
+    const user = JSON.parse(userString);
+    this.accountService.currentUser.set(user);
   }
 
   ngOnDestroy(): void {
     this.componentDestroyed.next(true);
     this.componentDestroyed.complete();
+  }
+  getUsers() {
+    this.http.get('https://localhost:5001/users').subscribe({
+      next: response => this.users = response,
+      error: error => console.log(error),
+      complete: () => console.log('Request has completed')
+    })
   }
 
   loadItems(): void {
