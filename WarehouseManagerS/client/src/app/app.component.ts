@@ -7,18 +7,12 @@ import { NavComponent } from './nav/nav.component';
 import { AccountService } from './_services/account.service';
 import { HomeComponent } from './home/home.component';
 import { ItemListComponent } from './ItemsList/item-list.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css',],
-  standalone: true,
-  imports: [
-    
-    NavComponent,
-    ItemListComponent,
-    
-  ]
+  styleUrls: ['./app.component.css',]
 })
 export class AppComponent implements OnInit {
   componentDestroyed = new Subject();

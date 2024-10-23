@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ItemService } from '../_services/item.service';
 import { Item } from '../_models/item';
 import { Subject, takeUntil } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
-  styleUrls: ['./item-list.component.css']
+  styleUrls: ['./item-list.component.css'],
 })
 export class ItemListComponent implements OnInit, OnDestroy {
   componentDestroyed = new Subject();

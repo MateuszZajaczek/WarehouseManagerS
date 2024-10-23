@@ -8,25 +8,28 @@ import { NavComponent } from './nav/nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ItemListComponent } from './ItemsList/item-list.component';
+import { HomeComponent } from './home/home.component';
+import { AppRoutingModule } from './app-routing.module';
+
 
 @NgModule({
-  declarations: [     // Dodaj AppComponent tutaj
+  declarations: [
+    AppComponent,
     NavComponent,
     ItemListComponent
   ],
   imports: [
+    HomeComponent,
+    AppRoutingModule,
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    CommonModule,
     FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
     BsDropdownModule.forRoot()
   ],
   providers: [ItemService],
-  bootstrap: []
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
