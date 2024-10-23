@@ -7,7 +7,6 @@ import {NavComponent } from './nav/nav.component'
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent }, // Ścieżka domyślna (np. strona główna)
   { path: 'items', component: ItemListComponent }, // Ścieżka do listy przedmiotów
   // Dodaj inne ścieżki według potrzeb
 ];
