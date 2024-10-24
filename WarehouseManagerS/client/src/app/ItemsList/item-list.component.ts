@@ -115,32 +115,6 @@ export class ItemListComponent implements OnInit, OnDestroy {
     }
   }
 
-  undoLastAction(): void {
-    if (this.lastAction) {
-      if (this.lastAction.action === 'delete') {
-        const itemToRestore = this.lastAction.item;
-        this.itemService.editItem(itemToRestore).subscribe({
-          next: () => {
-            const itemsFormArray = this.form.get('items') as FormArray;
-            itemsFormArray.insert(this.lastAction!.index, this.createItemFormGroup(itemToRestore));
-            this.lastAction = null;
-          },
-          error: error => console.log(error)
-        });
-      } else if (this.lastAction.action === 'edit' || this.lastAction.action === 'add') {
-        const previousItem = this.lastAction.item;
-        this.itemService.editItem(previousItem).subscribe({
-          next: () => {
-            const itemsFormArray = this.form.get('items') as FormArray;
-            itemsFormArray.setControl(this.lastAction!.index, this.createItemFormGroup(previousItem));
-            this.lastAction = null;
-          },
-          error: error => console.log(error)
-        });
-      }
-    }
-  }
-
   addItem(): void {
     const newItem: Item = { id: 0, name: '', quantity: 0, category: this.categories[0] };
     const itemsFormArray = this.form.get('items') as FormArray;
@@ -150,12 +124,5 @@ export class ItemListComponent implements OnInit, OnDestroy {
     newItemFormGroup.get('quantity')?.enable();
     newItemFormGroup.get('category')?.enable();
     itemsFormArray.insert(0, newItemFormGroup);
-  }
-
-  reassignIds(): void {
-    const itemsFormArray = this.form.get('items') as FormArray;
-    itemsFormArray.controls.forEach((group, index) => {
-      (group as FormGroup).get('id')?.setValue(index + 1);
-    });
   }
 }
