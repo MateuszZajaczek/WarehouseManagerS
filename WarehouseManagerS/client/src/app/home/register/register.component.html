@@ -1,5 +1,5 @@
 <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
-  <h2 class="text-center text-primary">Sign up</h2>
+  <h2 class="text-center text-primary">Zarejestruj się</h2>
   <hr />
   <div class="mb-3 form-floating">
     <input type="text"
@@ -8,17 +8,7 @@
            [(ngModel)]="model.username"
            placeholder="Username"
            autocomplete="new-password" />
-    <label>Username</label>
-  </div>
-
-  <div class="mb-3">
-    <label>Who is your favourite user?</label>
-    <select class="form-select">
-      @for (user of usersFromHomeComponent; track $index) {
-      <option [value]="user.userName">
-        {{user.userName}}
-        </option>}
-    </select>
+    <label>Nazwa użytkownika</label>
   </div>
 
   <div class="mb-3 form-floating">
@@ -28,7 +18,7 @@
            [(ngModel)]="model.password"
            placeholder="Password"
            autocomplete="new-username" />
-    <label>Password</label>
+    <label>Hasło</label>
   </div>
 
 

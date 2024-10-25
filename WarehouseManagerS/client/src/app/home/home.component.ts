@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RegisterComponent } from '../home/register/register.component';
 import { AccountService } from '../_services/account.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -21,6 +21,10 @@ export class HomeComponent implements OnInit {
 
   registerToggle() {
     this.registerMode = !this.registerMode
+  }
+
+  cancelRegisterMode(event: boolean) {
+    this.registerMode = event;
   }
 
   ngOnInit(): void {
