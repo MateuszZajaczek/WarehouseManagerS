@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AccountService } from 'src/app/_services/account.service';
 
 
 @Component({
@@ -12,15 +12,23 @@ import { CommonModule } from '@angular/common';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-
-  @Input() usersFromHomeComponent: any;
+private accountService = inject(AccountService);
+  cancelRegister = output<boolean>();
   model: any = {}
 
   register() {
-    console.log(this.model);
+    this.accountService.register(this.model).subscribe({
+      next: response => {
+        console.log(response);
+        this.cancel();
+      },
+      error: error => console.log(error)
+    })
   }
 
+
+
   cancel() {
-    console.log('cancelled');
+    this.cancelRegister.emit(false);
   }
 }
