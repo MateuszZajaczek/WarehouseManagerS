@@ -19,8 +19,7 @@ export class AccountService {
         localStorage.setItem('user', JSON.stringify(user))
         this.currentUser.set(user);
       }
-    })
-    )
+    }))
   }
 
   register(model: any) {
@@ -38,9 +37,5 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
-  }
-
-
-
-  
+  } 
 }
