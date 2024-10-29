@@ -11,12 +11,12 @@
 
         public byte[] PasswordSalt { get; set; }
 
-        public Role Role { get; set;}
+        //public Role Role { get; set;}
         
     }
-    public enum Role
-    {
-        Admin, użytkownik
-    }
+    //public enum Role
+    //{
+    //    Admin, użytkownik
+    //}
 
 }
