@@ -19,7 +19,7 @@ export class NavComponent {
   login() {
     this.accountService.login(this.model).subscribe({
       next: response => {
-        console.log(response);
+        console.log("Logged in successfully");
       },
       error: error => console.log(error)
     });

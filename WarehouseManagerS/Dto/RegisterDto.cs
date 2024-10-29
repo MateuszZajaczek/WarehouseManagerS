@@ -12,8 +12,8 @@ namespace WarehouseManagerS.Dto
         [Required]
         public string Password { get; set; }
 
-        [Required]
-        public Role Role { get; set; }
+        //[Required]
+        //public Role Role { get; set; }
 
     }
 }
