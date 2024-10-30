@@ -6,7 +6,7 @@ namespace WarehouseManagerS.Dto
     public class RegisterDto
     {
         [Required]
-        [MaxLength(25)]
+        [MaxLength(25, ErrorMessage = "Username must be less than 25 characters")]
         public string Username { get; set; }
 
         [Required]

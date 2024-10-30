@@ -4,22 +4,33 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ItemService } from './_services/item.service';
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './_components/nav/nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ItemListComponent } from './ItemsList/item-list.component';
-import { HomeComponent } from './home/home.component';
+import { ItemListComponent } from './_components/ItemsList/item-list.component';
+import { HomeComponent } from './_components/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
+import { RegisterComponent } from './_components/register/register.component';
+import { OrdersListComponent } from './_components/orders-list/orders-list.component';
+import { ReturnsListComponent } from './_components/returns-list/returns-list.component';
+import { UserDetailComponent } from './_components/user-detail/user-detail.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
-    ItemListComponent
+    // NavComponent,
+    ItemListComponent,
+    RegisterComponent,
+    HomeComponent,
+    OrdersListComponent,
+    ReturnsListComponent,
+    UserDetailComponent,
+
   ],
   imports: [
-    HomeComponent,
+
+    NavComponent,
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,

@@ -30,7 +30,7 @@ namespace WarehouseManagerS.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
+                Expires = DateTime.Now.AddSeconds(15),
                 SigningCredentials = creds
             };
 
