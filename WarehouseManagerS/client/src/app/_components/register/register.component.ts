@@ -6,8 +6,7 @@ import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-register',
-  standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  // imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -25,9 +24,7 @@ private accountService = inject(AccountService);
       error: error => console.log(error)
     })
   }
-
-
-
+  
   cancel() {
     this.cancelRegister.emit(false);
   }

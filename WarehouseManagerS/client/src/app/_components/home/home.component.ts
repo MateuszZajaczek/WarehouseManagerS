@@ -1,13 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RegisterComponent } from '../home/register/register.component';
-import { AccountService } from '../_services/account.service';
+import { AccountService } from '../../_services/account.service';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
-  imports: [RegisterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

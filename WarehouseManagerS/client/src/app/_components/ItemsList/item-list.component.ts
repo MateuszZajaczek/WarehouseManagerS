@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { ItemService } from '../_services/item.service';
-import { Item } from '../_models/item';
+import { ItemService } from '../../_services/item.service';
+import { Item } from '../../_models/item';
 import { Subject, takeUntil } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

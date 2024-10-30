@@ -1,10 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { NavComponent } from './nav/nav.component';
-import { HomeComponent } from './home/home.component';
-import { ItemListComponent } from './ItemsList/item-list.component';
-import { AppRoutingModule } from './app-routing.module';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
