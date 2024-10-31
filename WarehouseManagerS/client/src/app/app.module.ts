@@ -14,7 +14,7 @@ import { RegisterComponent } from './_components/register/register.component';
 import { OrdersListComponent } from './_components/orders-list/orders-list.component';
 import { ReturnsListComponent } from './_components/returns-list/returns-list.component';
 import { UserDetailComponent } from './_components/user-detail/user-detail.component';
-
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -26,11 +26,13 @@ import { UserDetailComponent } from './_components/user-detail/user-detail.compo
     OrdersListComponent,
     ReturnsListComponent,
     UserDetailComponent,
+    NavComponent,
+    
 
   ],
   imports: [
 
-    NavComponent,
+  
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
@@ -38,6 +40,8 @@ import { UserDetailComponent } from './_components/user-detail/user-detail.compo
     FormsModule,
     BrowserAnimationsModule,
     FormsModule,
+    RouterLink, 
+    RouterLinkActive,
     BsDropdownModule.forRoot()
   ],
   providers: [ItemService],
