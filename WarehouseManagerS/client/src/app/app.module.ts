@@ -5,7 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ItemService } from './_services/item.service';
 import { NavComponent } from './_components/nav/nav.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ItemListComponent } from './_components/ItemsList/item-list.component';
 import { HomeComponent } from './_components/home/home.component';
@@ -15,11 +15,11 @@ import { OrdersListComponent } from './_components/orders-list/orders-list.compo
 import { ReturnsListComponent } from './_components/returns-list/returns-list.component';
 import { UserDetailComponent } from './_components/user-detail/user-detail.component';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { provideToastr} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
-    // NavComponent,
     ItemListComponent,
     RegisterComponent,
     HomeComponent,
@@ -42,9 +42,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
     FormsModule,
     RouterLink, 
     RouterLinkActive,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    
   ],
-  providers: [ItemService],
+  providers: [ItemService, provideAnimations(), provideToastr({
+    positionClass: 'toast-bottom-right'
+  })],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

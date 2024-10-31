@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#angular-specific files
+
+
+
 # User-specific files
 *.json
 *.rsuser
