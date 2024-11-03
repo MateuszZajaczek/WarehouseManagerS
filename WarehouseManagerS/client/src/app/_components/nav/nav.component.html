@@ -1,24 +1,29 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container">
     <div class="d-flex align-items-center">
-      <a class="navbar-brand me-3" routerLink="/"><h1 class="navbar-title">{{ title }}</h1></a>
-      @if (accountService.currentUser()) {
+      <a class="navbar-brand me-3" routerLink="/">
+        <h1 class="navbar-title">{{ title }}</h1>
+      </a>
+
       <ul class="navbar-nav">
+        @if (accountService.currentUser()) {
         <li class="nav-item">
           <a routerLink="orders" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Zamówienia</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/items" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Lista produktów</a>
+          <a routerLink="/items" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Lista
+            produktów</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/returns"class="nav-link" routerLinkActive="active" aria-current="page" href="#">Zwroty</a>
+          <a routerLink="/returns" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Zwroty</a>
         </li>
+        }
       </ul>
-      }
+
     </div>
     @if(accountService.currentUser()){
     <div dropdown class="dropdown">
-      <a dropdownToggle class="dropdown-toggle text-light cursor-pointer">Jesteś zalogowany</a>  <!-- Welcome "username" (later to add)-->
+      <a dropdownToggle class="dropdown-toggle text-light cursor-pointer">Witaj {{accountService.currentUser()}}</a>
       <div *dropdownMenu class="dropdown-menu">
         <a class="dropdown-item">Edytuj profil</a>
         <div class="dropdown-divider"></div>
@@ -30,15 +35,9 @@
 
     @if (!accountService.currentUser()){
     <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex ms-auto" autocomplete="off">
-      <input name="username"
-             [(ngModel)]="model.username"
-             class="form-control me-2"
-             placeholder="Username">
-      <input name="password"
-             [(ngModel)]="model.password"
-             class="form-control me-2"
-             placeholder="Password"
-             type="password">
+      <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="Username">
+      <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="Password"
+        type="password">
       <button class="btn btn-outline-success" type="submit">Login</button>
     </form>
     }
