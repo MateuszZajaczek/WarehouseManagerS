@@ -6,11 +6,11 @@ import { inject } from '@angular/core';
 export const authGuard: CanActivateFn = (route, state) => {
   const accountService = inject(AccountService);
   const toastr = inject(ToastrService);
-  if(accountService.currentUser()){
-  return true;
+  if (accountService.currentUser()) {
+    return true;
   }
-else {
-  toastr.error('permission denied');
-  return false;
-}
+  else {
+    toastr.error('permission denied');
+    return false;
+  }
 };

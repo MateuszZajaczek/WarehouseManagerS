@@ -15,27 +15,36 @@ export class AccountService {
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map(user => {
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user))
-        this.currentUser.set(user);
-      }
-    }))
+        if (user && user.token) {
+          // Zapisz token do localStorage
+          localStorage.setItem('token', user.token);
+          // Zapisz użytkownika do localStorage
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUser.set(user);
+        }
+      })
+    );
   }
 
   register(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map(user => {
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user))
-        this.currentUser.set(user);
-      }
-      return user;
-    })
-    )
+        if (user && user.token) {
+          // Zapisz token do localStorage
+          localStorage.setItem('token', user.token);
+          // Zapisz użytkownika do localStorage
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUser.set(user);
+        }
+        return user;
+      })
+    );
   }
 
   logout() {
+    // Usuwanie tokenu i użytkownika z localStorage
+    localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.currentUser.set(null);
-  } 
+  }
 }

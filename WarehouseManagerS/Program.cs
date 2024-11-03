@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Interfaces;
 using WarehouseManagerS.Services;
@@ -14,7 +17,7 @@ namespace WarehouseManagerS
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            
+
 
             builder.Services.AddDbContext<DataContext>(opt =>
             {
@@ -23,6 +26,20 @@ namespace WarehouseManagerS
             builder.Services.AddCors();
 
             builder.Services.AddScoped<ITokenService, TokenService>();
+
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"]))
+                    };
+                });
 
             var app = builder.Build();
 
@@ -36,6 +53,8 @@ namespace WarehouseManagerS
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

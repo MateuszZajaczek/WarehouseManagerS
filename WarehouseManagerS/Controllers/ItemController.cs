@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Entities;
 
 namespace WarehouseManagerS.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[Controller]")]
     public class ItemsController : BaseApiController
@@ -17,12 +19,14 @@ namespace WarehouseManagerS.Controllers
         }
 
         [HttpGet]
+        
         public async Task<ActionResult<IEnumerable<Item>>> GetItems()
         {
             return await _context.Items.ToListAsync();
         }
 
         [HttpGet("{id}")]
+        
         public async Task<ActionResult<Item>> GetItem(int id)
         {
             return await _context.Items.FindAsync(id);
