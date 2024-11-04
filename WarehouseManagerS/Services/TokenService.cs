@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using WarehouseManagerS.Entities.Users;
+using WarehouseManagerS.Entities;
 using WarehouseManagerS.Interfaces;
 
 namespace WarehouseManagerS.Services

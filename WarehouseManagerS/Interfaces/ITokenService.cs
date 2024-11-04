@@ -1,4 +1,4 @@
-﻿using WarehouseManagerS.Entities.Users;
+﻿using WarehouseManagerS.Entities;
 
 namespace WarehouseManagerS.Interfaces
 {

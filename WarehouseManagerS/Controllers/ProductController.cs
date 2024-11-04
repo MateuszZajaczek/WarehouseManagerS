@@ -37,14 +37,14 @@ namespace WarehouseManagerS.Controllers
         {
             _context.Products.Add(Product);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetProduct), new { id = Product.Id }, Product);
+            return CreatedAtAction(nameof(GetProduct), new { id = Product.ProductId }, Product);
         }
 
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditProduct(int id, Product Product)
         {
-            if (id != Product.Id)
+            if (id != Product.ProductId)
             {
                 return BadRequest();
             }
@@ -87,7 +87,7 @@ namespace WarehouseManagerS.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.ProductId == id);
         }
     }
 }

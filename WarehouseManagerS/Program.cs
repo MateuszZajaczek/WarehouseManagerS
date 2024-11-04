@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WarehouseManager.API.Middleware;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Interfaces;
 using WarehouseManagerS.Services;
@@ -41,12 +42,18 @@ namespace WarehouseManagerS
                     };
                 });
 
+            builder.Services.AddAuthorization(options =>
+                {
+                    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                    options.AddPolicy("RequireManagerRole", policy => policy.RequireRole("Admin", "Manager"));
+                });
+
             var app = builder.Build();
 
 
 
             // Configure the HTTP request pipeline
-
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
             app.UseHttpsRedirection();
@@ -57,7 +64,7 @@ namespace WarehouseManagerS
             app.UseAuthentication();
 
             app.UseAuthorization();
-
+            app.MapControllers();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
