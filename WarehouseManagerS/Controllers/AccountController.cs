@@ -56,7 +56,7 @@ namespace WarehouseManagerS.Controllers
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
             for (int i = 0; i < computedHash.Length; i++)
             {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Bxłędny login lub hasło");
+                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Błędny login lub hasło");
             }
 
             var token = _tokenservice.CreateToken(user);

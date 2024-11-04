@@ -9,47 +9,47 @@ namespace WarehouseManagerS.Controllers
     [Authorize]
     [ApiController]
     [Route("[Controller]")]
-    public class ItemsController : BaseApiController
+    public class ProductsController : BaseApiController
     {
         private readonly DataContext _context;
 
-        public ItemsController(DataContext context)
+        public ProductsController(DataContext context)
         {
             _context = context;
         }
 
         [HttpGet]
         
-        public async Task<ActionResult<IEnumerable<Item>>> GetItems()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Items.ToListAsync();
+            return await _context.Products.ToListAsync();
         }
 
         [HttpGet("{id}")]
         
-        public async Task<ActionResult<Item>> GetItem(int id)
+        public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            return await _context.Items.FindAsync(id);
+            return await _context.Products.FindAsync(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Item>> AddItem(Item item)
+        public async Task<ActionResult<Product>> AddProduct(Product Product)
         {
-            _context.Items.Add(item);
+            _context.Products.Add(Product);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
+            return CreatedAtAction(nameof(GetProduct), new { id = Product.Id }, Product);
         }
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditItem(int id, Item item)
+        public async Task<IActionResult> EditProduct(int id, Product Product)
         {
-            if (id != item.Id)
+            if (id != Product.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(item).State = EntityState.Modified;
+            _context.Entry(Product).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace WarehouseManagerS.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ItemExists(id))
+                if (!ProductExists(id))
                 {
                     return NotFound();
                 }
@@ -71,23 +71,23 @@ namespace WarehouseManagerS.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItem(int id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
-            var item = await _context.Items.FindAsync(id);
-            if (item == null)
+            var Product = await _context.Products.FindAsync(id);
+            if (Product == null)
             {
                 return NotFound();
             }
 
-            _context.Items.Remove(item);
+            _context.Products.Remove(Product);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ItemExists(int id)
+        private bool ProductExists(int id)
         {
-            return _context.Items.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

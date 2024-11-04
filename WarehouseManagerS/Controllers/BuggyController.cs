@@ -21,7 +21,7 @@ namespace WarehouseManagerS
 
         public ActionResult<string> GetNotFound()
         {
-            var thing = context.Items.Find(-1);
+            var thing = context.Products.Find(-1);
 
             if (thing == null) return NotFound();
 
@@ -30,9 +30,9 @@ namespace WarehouseManagerS
 
         [HttpGet("server-error")]
 
-        public ActionResult<Item> GetServerError()
+        public ActionResult<Product> GetServerError()
         {
-            var thing = context.Items.Find(-1) ?? throw new Exception("Server Error");
+            var thing = context.Products.Find(-1) ?? throw new Exception("Server Error");
             return thing;
         }
 

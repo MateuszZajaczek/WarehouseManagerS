@@ -1,6 +1,6 @@
 ﻿namespace WarehouseManagerS.Entities
 {
-    public class Item : BaseEntity
+    public class Product : BaseEntity
     {
         public string Name { get; set; }
         public int Quantity { get; set; }
