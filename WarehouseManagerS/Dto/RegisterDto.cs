@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WarehouseManagerS.Entities.Users;
+using WarehouseManagerS.Entities;
 
 namespace WarehouseManagerS.Dto
 {
@@ -12,8 +12,11 @@ namespace WarehouseManagerS.Dto
         [Required]
         public string Password { get; set; }
 
-        //[Required]
-        //public Role Role { get; set; }
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public Role Role { get; set; }
 
     }
 }

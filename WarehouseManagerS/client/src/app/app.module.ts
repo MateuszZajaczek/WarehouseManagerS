@@ -15,7 +15,7 @@ import { OrdersListComponent } from './_components/orders-list/orders-list.compo
 import { ReturnsListComponent } from './_components/returns-list/returns-list.component';
 import { UserDetailComponent } from './_components/user-detail/user-detail.component';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { provideToastr} from 'ngx-toastr';
+import { provideToastr } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -27,12 +27,12 @@ import { provideToastr} from 'ngx-toastr';
     ReturnsListComponent,
     UserDetailComponent,
     NavComponent,
-    
+
 
   ],
   imports: [
 
-  
+
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
@@ -40,10 +40,10 @@ import { provideToastr} from 'ngx-toastr';
     FormsModule,
     BrowserAnimationsModule,
     FormsModule,
-    RouterLink, 
+    RouterLink,
     RouterLinkActive,
     BsDropdownModule.forRoot(),
-    
+
   ],
   providers: [ItemService, provideAnimations(), provideToastr({
     positionClass: 'toast-bottom-right'

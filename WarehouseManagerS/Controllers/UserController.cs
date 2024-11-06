@@ -4,7 +4,7 @@ using WarehouseManagerS.Data;
 using WarehouseManagerS.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WarehouseManagerS.Entities.Users;
+using WarehouseManagerS.Entities;
 
 namespace WarehouseManagerS.Controllers
 {

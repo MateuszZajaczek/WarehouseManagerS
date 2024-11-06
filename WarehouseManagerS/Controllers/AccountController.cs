@@ -4,9 +4,8 @@ using System.Security.Cryptography;
 using System.Text;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Dto;
-using WarehouseManagerS.Entities.Users;
+using WarehouseManagerS.Entities;
 using WarehouseManagerS.Interfaces;
-using WarehouseManagerS.Services;
 
 namespace WarehouseManagerS.Controllers
 {
@@ -33,6 +32,8 @@ namespace WarehouseManagerS.Controllers
             var user = new AppUser
             {
                 UserName = registerDto.Username.ToLower(),
+                Email = registerDto.Email,
+                Role = registerDto.Role,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
                 // Role = registerDto.Role
