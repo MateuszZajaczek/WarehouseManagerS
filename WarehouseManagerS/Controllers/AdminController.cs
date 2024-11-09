@@ -10,54 +10,15 @@ using WarehouseManagerS.Entities;
 
 namespace WarehouseManager.API.Controllers
 {
-
     [ApiController]
     [Route("[controller]")]
     public class AdminController : BaseApiController
     {
-
         private readonly DataContext _context;
-
         public AdminController(DataContext context)
 
         {
             _context = context;
-        }
-
-        [HttpPost("register")] // POST account register
-
-        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
-        {
-            if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
-            using var hmac = new HMACSHA512();
-
-            var user = new AppUser
-            {
-                UserName = registerDto.Username.ToLower(),
-                Email = registerDto.Email,
-                Role = registerDto.Role,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
-                // Role = registerDto.Role
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return user;
-        }
-
-        private async Task<bool> UserExists(string username)
-        {
-            return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
-        }
-
-        [Authorize(Policy = "RequireAdminRole")]
-
-
-        public ActionResult GetUsers()
-        {
-            return Ok();
         }
     }
 }

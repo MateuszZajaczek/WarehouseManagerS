@@ -42,7 +42,8 @@ namespace WarehouseManagerS.Controllers
             var userDto = new UserDto
             {
                 UserName = user.UserName,
-                Token = token       
+                Token = token,
+                Role = user.Role.ToString() 
             };
             return Ok(userDto);
         }
@@ -61,8 +62,7 @@ namespace WarehouseManagerS.Controllers
                 Email = registerDto.Email,
                 Role = registerDto.Role,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
-                // Role = registerDto.Role
+                PasswordSalt = hmac.Key,
             };
 
             _context.Users.Add(user);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Entities;
@@ -6,6 +7,7 @@ using WarehouseManagerS.Entities;
 namespace WarehouseManagerS.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[Controller]")]
     public class UsersController : BaseApiController
     {
