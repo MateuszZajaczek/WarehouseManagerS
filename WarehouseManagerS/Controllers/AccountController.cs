@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,35 +15,11 @@ namespace WarehouseManagerS.Controllers
         private readonly DataContext _context;
         private readonly ITokenService _tokenservice;
 
-
         public AccountController(DataContext context, ITokenService tokenService)
-
         {
+
             _context = context;
             _tokenservice = tokenService;
-        }
-
-        [HttpPost("register")] // POST account register
-
-        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
-        {
-            if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
-            using var hmac = new HMACSHA512();
-
-            var user = new AppUser
-            {
-                UserName = registerDto.Username.ToLower(),
-                Email = registerDto.Email,
-                Role = registerDto.Role,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
-                // Role = registerDto.Role
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return user;
         }
 
         [HttpPost("login")]
@@ -65,15 +42,44 @@ namespace WarehouseManagerS.Controllers
             var userDto = new UserDto
             {
                 UserName = user.UserName,
-                Token = token
+                Token = token,
+                Role = user.Role.ToString() 
             };
-
-
             return Ok(userDto);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("register")] // POST account register
+
+        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
+        {
+            if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
+            using var hmac = new HMACSHA512();
+
+            var user = new AppUser
+            {
+                UserName = registerDto.Username.ToLower(),
+                Email = registerDto.Email,
+                Role = registerDto.Role,
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                PasswordSalt = hmac.Key,
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
         private async Task<bool> UserExists(string username)
         {
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        public ActionResult GetUsers()
+        {
+            return Ok();
         }
     }
 }

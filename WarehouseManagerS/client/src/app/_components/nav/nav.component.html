@@ -18,15 +18,26 @@
           <a routerLink="/returns" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Zwroty</a>
         </li>
         }
+        <li class="nav-item">
+  <a routerLink="/errors" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Errors</a>
+</li>
       </ul>
 
     </div>
+
+
     @if(accountService.currentUser()){
     <div dropdown class="dropdown">
       <a dropdownToggle class="dropdown-toggle text-light cursor-pointer">Witaj {{
         accountService.currentUser()?.username }}</a>
       <div *dropdownMenu class="dropdown-menu">
         <a class="dropdown-item">Edytuj profil</a>
+        <!-- ADMIN DROPDOWN MENU START-->
+        @if(accountService.currentUser()?.role === 'Admin')
+        {
+        <a class="dropdown-item" routerLink="/register">Rejestruj użytkownika</a>
+        }
+        <!-- ADMIN DROPDOWN MENU END-->
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="logout()">Wyloguj</a>
       </div>

@@ -1,0 +1,41 @@
+<form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
+  <h2 class="text-center text-primary">Rejestruj użytkownika</h2>
+  <hr />
+  <div class="mb-3 form-floating">
+    <input type="text"
+           class="form-control"
+           formControlName="username"
+           placeholder="Username"
+           autocomplete="off" />
+    <label>Nazwa użytkownika</label>
+  </div>
+
+  <div class="mb-3 form-floating">
+    <input type="password"
+           class="form-control"
+           formControlName="password"
+           placeholder="Password"
+           autocomplete="new-password" />
+    <label>Hasło</label>
+  </div>
+
+  <div class="mb-3 form-floating">
+    <input type="email"
+           class="form-control"
+           formControlName="email"
+           placeholder="Email" />
+    <label>Email</label>
+  </div>
+
+  <div class="mb-3 form-floating">
+    <select class="form-control" formControlName="role">
+      <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+    </select>
+    <label>Rola</label>
+  </div>
+
+  <div class="form-group text-center">
+    <button class="btn btn-success me-2" type="submit">Rejestruj</button>
+    <!-- <button class="btn btn-default me-2" (click)="cancel()" type="button">Anuluj</button> -->
+  </div>
+</form>

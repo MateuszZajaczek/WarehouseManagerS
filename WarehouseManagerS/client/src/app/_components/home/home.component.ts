@@ -25,26 +25,26 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUsers();
-    this.setCurrentUser();
+    // this.getUsers();
+    // this.setCurrentUser();
   }
 
-  setCurrentUser() {
-    const userString = localStorage.getItem('user');
-    if (!userString) return;
-    const user = JSON.parse(userString);
-    this.accountService.currentUser.set(user);
-  }
+  // setCurrentUser() {
+  //   const userString = localStorage.getItem('user');
+  //   if (!userString) return;
+  //   const user = JSON.parse(userString);
+  //   this.accountService.currentUser.set(user);
+  // }
 
   ngOnDestroy(): void {
     this.componentDestroyed.next(true);
     this.componentDestroyed.complete();
   }
-  getUsers() {
-    this.http.get('https://localhost:5001/users').subscribe({
-      next: response => this.users = response,
-      error: error => console.log(error),
-      complete: () => console.log('Request has completed')
-    })
-  }
+  // getUsers() {
+  //   this.http.get('https://localhost:5001/users').subscribe({
+  //     next: response => this.users = response,
+  //     error: error => console.log(error),
+  //     complete: () => console.log('Request has completed')
+  //   })
+  // }
 }
