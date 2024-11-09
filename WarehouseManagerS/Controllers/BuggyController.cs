@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WarehouseManagerS.Controllers;
 using WarehouseManagerS.Data;
@@ -8,7 +7,7 @@ namespace WarehouseManagerS
 {
     public class BuggyController(DataContext context) : BaseApiController
     {
-        [Authorize]
+        
 
         [HttpGet("auth")]
 
@@ -30,10 +29,10 @@ namespace WarehouseManagerS
 
         [HttpGet("server-error")]
 
-        public ActionResult<Product> GetServerError()
+        public ActionResult<AppUser> GetServerError()
         {
-            var thing = context.Products.Find(-1) ?? throw new Exception("Server Error");
-            return thing;
+            var thing = context.Users.Find(-1) ?? throw new Exception("Server Error");
+            return thing;   
         }
 
         [HttpGet("bad-request")]

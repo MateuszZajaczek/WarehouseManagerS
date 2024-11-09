@@ -5,6 +5,7 @@ import { ItemListComponent } from './_components/ItemsList/item-list.component';
 import { ReturnsListComponent } from './_components/returns-list/returns-list.component';
 import { OrdersListComponent } from './_components/orders-list/orders-list.component';
 import { authGuard } from './_guard/auth.guard';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component'; 
 // Importuj inne komponenty według potrzeb
 
 
@@ -21,6 +22,7 @@ const routes: Routes = [
     ]
   },
 
+  { path: 'errors', component: TestErrorsComponent }, // Ścieżka do testowania błędów
   { path: '**', component: HomeComponent, pathMatch: 'full' }, //Ścieżka do strony głównej
 ];
 

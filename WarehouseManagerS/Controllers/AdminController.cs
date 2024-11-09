@@ -3,51 +3,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using WarehouseManagerS.Controllers;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Dto;
 using WarehouseManagerS.Entities;
-using WarehouseManagerS.Interfaces;
 
-namespace WarehouseManagerS.Controllers
+namespace WarehouseManager.API.Controllers
 {
-    public class AccountController : BaseApiController
+
+    [ApiController]
+    [Route("[controller]")]
+    public class AdminController : BaseApiController
     {
+
         private readonly DataContext _context;
-        private readonly ITokenService _tokenservice;
 
-        public AccountController(DataContext context, ITokenService tokenService)
+        public AdminController(DataContext context)
+
         {
-
             _context = context;
-            _tokenservice = tokenService;
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
-        {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
-
-            if (user == null) return Unauthorized("Użytkownik nie istnieje");
-
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Błędny login lub hasło");
-            }
-
-            var token = _tokenservice.CreateToken(user);
-
-            var userDto = new UserDto
-            {
-                UserName = user.UserName,
-                Token = token       
-            };
-            return Ok(userDto);
-        }
-
-        [Authorize(Roles = "Admin")]
         [HttpPost("register")] // POST account register
 
         public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
@@ -77,6 +53,8 @@ namespace WarehouseManagerS.Controllers
         }
 
         [Authorize(Policy = "RequireAdminRole")]
+
+
         public ActionResult GetUsers()
         {
             return Ok();

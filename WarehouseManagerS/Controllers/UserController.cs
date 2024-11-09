@@ -2,9 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using WarehouseManagerS.Entities;
 
 namespace WarehouseManagerS.Controllers
 {
