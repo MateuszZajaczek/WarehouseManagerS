@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-test-errors',
@@ -9,11 +9,12 @@ import {HttpClient } from '@angular/common/http';
 export class TestErrorsComponent {
   baseUrl = 'https://localhost:5001/';
   private http = inject(HttpClient);
+  private validationErrors: string[] = [];
 
   get400Error() {
     this.http.get(this.baseUrl + 'buggy/bad-request').subscribe({
       next: response => console.log(response),
-        error: error => console.log(error)
+      error: error => console.log(error)
     })
   }
 
@@ -41,7 +42,11 @@ export class TestErrorsComponent {
   get400ValidationError() {
     this.http.post(this.baseUrl + 'account/register', {}).subscribe({
       next: response => console.log(response),
-      error: error => console.log(error)
+      error: error => {
+        console.log
+        (error)
+        this.validationErrors = error
+      }
     })
   }
 
