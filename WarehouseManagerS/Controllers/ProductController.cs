@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Entities;
+using WarehouseManager.Dto;
 
 namespace WarehouseManagerS.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "RequireStaffRole")]
     [ApiController]
-    [Route("[Controller]")]
+    [Route("api/[controller]")]
+
     public class ProductsController : BaseApiController
     {
         private readonly DataContext _context;
@@ -19,18 +21,47 @@ namespace WarehouseManagerS.Controllers
         }
 
         [HttpGet]
-        
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            var products = await _context.Products
+                .Include(p => p.Category)
+                .Select(p => new ProductDto
+                {
+                    Id = p.ProductId,
+                    Name = p.ProductName,
+                    Quantity = p.QuantityInStock,
+                    Category = p.Category.CategoryName // Assuming Category has a Name property
+                                               // Map other properties as needed
+                })
+                .ToListAsync();
+
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
-        
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
-            return await _context.Products.FindAsync(id);
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .Where(p => p.ProductId == id)
+                .Select(p => new ProductDto
+                {
+                    Id = p.ProductId,
+                    Name = p.ProductName,
+                    Quantity = p.QuantityInStock,
+                    Category = p.Category.CategoryName
+                    // Map other properties as needed
+                })
+                .FirstOrDefaultAsync();
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
         }
+
 
         [HttpPost]
         public async Task<ActionResult<Product>> AddProduct(Product Product)

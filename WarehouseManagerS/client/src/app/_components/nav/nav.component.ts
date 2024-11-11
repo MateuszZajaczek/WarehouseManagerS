@@ -21,7 +21,7 @@ export class NavComponent {
   login() {
     this.accountService.login(this.model).subscribe({
       next: _ => {
-        this.router.navigateByUrl('/items');
+        this.router.navigateByUrl('/products');
       },
       error: error => {console.log('Error:', error);
       this.toastr.error(error.error);
