@@ -7,7 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css'],
+  styleUrl: './product-list.component.css',
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   componentDestroyed = new Subject();

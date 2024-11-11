@@ -46,6 +46,7 @@ namespace WarehouseManagerS
                 {
                     options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
                     options.AddPolicy("RequireManagerRole", policy => policy.RequireRole("Admin", "Manager"));
+                    options.AddPolicy("RequireStaffRole", policy => policy.RequireRole("Admin", "Manager", "Staff"));
                 });
 
             var app = builder.Build();

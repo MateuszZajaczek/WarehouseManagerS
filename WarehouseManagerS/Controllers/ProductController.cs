@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WarehouseManagerS.Data;
 using WarehouseManagerS.Entities;
-using WarehouseManagerS.Dto;
 using WarehouseManager.Dto;
 
 namespace WarehouseManagerS.Controllers
 {
-    [Authorize(Policy = "RequireAdminRole")]
+    [Authorize(Policy = "RequireStaffRole")]
     [ApiController]
     [Route("api/[controller]")]
 
@@ -20,7 +19,7 @@ namespace WarehouseManagerS.Controllers
         {
             _context = context;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
@@ -31,13 +30,13 @@ namespace WarehouseManagerS.Controllers
                     Id = p.ProductId,
                     Name = p.ProductName,
                     Quantity = p.QuantityInStock,
-                    Category = p.Category != null ? p.Category.CategoryName : "Unknown" // Dodane sprawdzenie null
+                    Category = p.Category.CategoryName // Assuming Category has a Name property
+                                               // Map other properties as needed
                 })
                 .ToListAsync();
 
             return Ok(products);
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDto>> GetProduct(int id)

@@ -19,7 +19,6 @@ export const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
-      { path: '', component: HomeComponent }, // Ścieżka do strony głównej
       { path: 'products', component: ProductListComponent }, // Ścieżka do listy przedmiotów
       { path: 'orders', component: OrdersListComponent }, // Ścieżka do listy zamówień
       { path: 'returns', component: ReturnsListComponent }, // Ścieżka do listy zwrotów
