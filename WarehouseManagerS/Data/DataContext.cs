@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WarehouseManagerS.Entities;
+using WarehouseManager.API.Entities;
 
 
 
-namespace WarehouseManagerS.Data;
+namespace WarehouseManager.API.Data;
 
 public class DataContext : DbContext
 {

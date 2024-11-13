@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WarehouseManager.API.Middleware;
-using WarehouseManagerS.Data;
-using WarehouseManagerS.Interfaces;
-using WarehouseManagerS.Services;
+using WarehouseManager.API.Data;
+using WarehouseManager.API.Interfaces;
+using WarehouseManager.API.Services;
+using WarehouseManager.API.Repositories;
 
 
 namespace WarehouseManagerS
@@ -27,6 +28,8 @@ namespace WarehouseManagerS
             builder.Services.AddCors();
 
             builder.Services.AddScoped<ITokenService, TokenService>();
+
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -59,7 +62,7 @@ namespace WarehouseManagerS
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
 
             app.UseAuthentication();

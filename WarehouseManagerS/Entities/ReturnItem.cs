@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WarehouseManagerS.Entities
+namespace WarehouseManager.API.Entities
 {
     public class ReturnItem
     {

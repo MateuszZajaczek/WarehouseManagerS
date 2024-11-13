@@ -2,10 +2,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using WarehouseManagerS.Entities;
-using WarehouseManagerS.Interfaces;
+using WarehouseManager.API.Entities;
+using WarehouseManager.API.Interfaces;
 
-namespace WarehouseManagerS.Services
+namespace WarehouseManager.API.Services
 {
     public class TokenService : ITokenService
     {

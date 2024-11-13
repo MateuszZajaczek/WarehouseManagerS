@@ -1,4 +1,4 @@
-﻿namespace WarehouseManagerS.Dto
+﻿namespace WarehouseManager.API.Dto
 {
     public class UserDto
     {

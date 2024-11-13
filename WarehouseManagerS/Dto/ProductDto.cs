@@ -1,4 +1,4 @@
-﻿namespace WarehouseManager.Dto;
+﻿namespace WarehouseManager.API.Dto;
 public class ProductDto
 {
     public int Id { get; set; } 
