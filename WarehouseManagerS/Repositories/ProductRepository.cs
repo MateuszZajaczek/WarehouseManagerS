@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WarehouseManager.Dto;
-using WarehouseManagerS.Data;
-using WarehouseManagerS.Entities;
-using WarehouseManagerS.Interfaces;
+using WarehouseManager.API.Dto;
+using WarehouseManager.API.Data;
+using WarehouseManager.API.Entities;
+using WarehouseManager.API.Interfaces;
 
-namespace WarehouseManagerS.Repositories
+
+namespace WarehouseManager.API.Repositories
 {
     public class ProductRepository(DataContext context) : IProductRepository
     {

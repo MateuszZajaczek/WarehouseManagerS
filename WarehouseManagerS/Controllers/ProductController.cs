@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using WarehouseManager.API.Dto;
 using WarehouseManager.API.Interfaces;
+using WarehouseManager.API.Controllers;
 
 
 namespace WarehouseManagerS.Controllers
 {
-    //[Authorize(Policy = "RequireStaffRole")]
+    [Authorize(Policy = "RequireStaffRole")]
     [ApiController]
     [Route("api/[controller]")]
 

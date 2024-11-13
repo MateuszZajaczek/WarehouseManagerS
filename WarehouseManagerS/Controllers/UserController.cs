@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WarehouseManagerS.Data;
-using WarehouseManagerS.Entities;
+using WarehouseManager.API.Data;
+using WarehouseManager.API.Entities;
+using WarehouseManager.API.Controllers;
 
-namespace WarehouseManagerS.Controllers
+namespace WarehouseManager.Controllers
 {
     [ApiController]
     [Authorize]

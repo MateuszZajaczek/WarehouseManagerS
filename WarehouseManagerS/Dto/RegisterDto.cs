@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WarehouseManagerS.Entities;
+using WarehouseManager.API.Entities;
 
-namespace WarehouseManagerS.Dto
+namespace WarehouseManager.API.Dto
 {
     public class RegisterDto
     {

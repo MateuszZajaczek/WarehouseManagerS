@@ -1,6 +1,8 @@
-﻿namespace WarehouseManager.API.Helpers
+﻿using AutoMapper;
+
+namespace WarehouseManager.API.Helpers
 {
-    public class AutoMapperProfiles
+    public class AutoMapperProfiles : Profile
     {
     }
 }

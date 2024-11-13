@@ -1,6 +1,6 @@
-using WarehouseManagerS.Entities;
+using WarehouseManager.API.Entities;
 
-namespace WarehouseManagerS.Interfaces
+namespace WarehouseManager.API.Interfaces
 {
     public interface IProductRepository
     {
