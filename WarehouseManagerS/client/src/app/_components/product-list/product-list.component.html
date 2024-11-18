@@ -6,22 +6,33 @@
         <th scope="col">Nazwa</th>
         <th scope="col">Ilość</th>
         <th scope="col">Kategoria</th>
+        <th scope="col">Cena jednostkowa</th>
       </tr>
     </thead>
     <tbody formArrayName="products">
-      <tr
-        *ngFor="let item of productsControls; let i = index"
-        [formGroupName]="i"
-      >
+      <tr *ngFor="let item of productsControls; let i = index"
+          [formGroupName]="i">
         <th scope="row">{{ i + 1 }}</th>
         <td>
           <input formControlName="name" class="form-control" />
         </td>
         <td>
-          <input formControlName="quantity" type="number" class="form-control" />
+          <input formControlName="quantity"
+                 type="number"
+                 class="form-control" />
         </td>
         <td>
           <input formControlName="category" type="text" class="form-control" />
+        </td>
+        <td>
+          <div class="input-group">
+            <input formControlName="unitPrice"
+                   type="text"
+                   class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">zł</span>
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>

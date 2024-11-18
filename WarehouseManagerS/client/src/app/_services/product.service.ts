@@ -18,7 +18,7 @@ export class ProductService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<Product[]>(this.apiUrl, { headers: headers }).pipe(
-      map(products => products.sort((a, b) => b.id - a.id))
+      map(products => products.sort((a, b) => b.productId - a.productId))
     );
   }
   
@@ -32,7 +32,7 @@ export class ProductService {
   }
 
   editProduct(Product: Product): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${Product.id}`, Product);
+    return this.http.put<void>(`${this.apiUrl}/${Product.productId}`, Product);
   }
 
   deleteProduct(id: number): Observable<void> {

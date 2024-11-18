@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
-using WarehouseManagerS.Controllers;
-using WarehouseManagerS.Data;
-using WarehouseManagerS.Dto;
-using WarehouseManagerS.Entities;
+using WarehouseManager.API.Controllers;
+using WarehouseManager.API.Data;
+using WarehouseManager.API.Dto;
+using WarehouseManager.API.Entities;
 
 namespace WarehouseManager.API.Controllers
 {

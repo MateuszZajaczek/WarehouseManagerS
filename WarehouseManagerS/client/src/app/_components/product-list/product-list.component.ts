@@ -48,10 +48,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   createProductFormGroup(product: Product): FormGroup {
     return this.fb.group({
-      id: [product.id],
-      name: [{ value: product.name, disabled: true }, Validators.required],
-      quantity: [{ value: product.quantity, disabled: true }, Validators.required],
-      category: [{ value: product.category, disabled: true }, Validators.required],
+      id: [product.productId],
+      name: [{ value: product.productName, disabled: true }, Validators.required],
+      quantity: [{ value: product.quantityInStock, disabled: true }, Validators.required],
+      category: [{ value: product.categoryName, disabled: true }, Validators.required],
+      unitPrice: [{ value: product.unitPrice, disabled: true}, Validators.required],
       isEditing: [false],
     });
   }
@@ -72,11 +73,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
   saveProduct(index: number): void {
     const productFormGroup = this.productsControls[index] as FormGroup;
     const updatedProduct: Product = productFormGroup.value;
-    if (updatedProduct.id === 0) {
+    if (updatedProduct.productId === 0) {
       // New item to add to the database
       this.productService.addProduct(updatedProduct).subscribe({
         next: (newProduct) => {
-          productFormGroup.get('id')?.setValue(newProduct.id);
+          productFormGroup.get('id')?.setValue(newProduct.productId);
           productFormGroup.get('isEditing')?.setValue(false);
           productFormGroup.get('name')?.disable();
           productFormGroup.get('quantity')?.disable();
@@ -116,7 +117,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   addProduct(): void {
-    const newProduct: Product = { id: 0, name: '', quantity: 0, category: '' };
+    const newProduct: Product = { productId: 0, productName: '', quantityInStock: 0, categoryName: '', unitPrice: 0 };
     const productsFormArray = this.form.get('products') as FormArray;
     const newProductFormGroup = this.createProductFormGroup(newProduct);
     newProductFormGroup.get('isEditing')?.setValue(true);

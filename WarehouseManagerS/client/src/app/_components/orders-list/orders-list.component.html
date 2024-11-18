@@ -1,1 +1,35 @@
-<p>orders-list works!</p>
+<!-- orders-list.component.html -->
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th align="center">ID zamówienia</th>
+        <th>Użytkownik</th>
+        <th>Data</th>
+        @if(accountService.currentUser()?.role === 'Admin'){
+        <th>Łączna suma</th>
+        }
+        <th>Status</th>
+        <th>Szczegóły</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.orderId }}</td>
+        <td>{{ order.userName }}</td>
+        <td>{{ order?.orderDate | date:'short' }}</td>
+        @if(accountService.currentUser()?.role === 'Admin'){
+        <td>{{ order?.totalAmount | currency: 'PLN ' }}</td>
+        }
+
+        <td>{{ order?.orderStatus }}</td>
+        <td>
+          <button class="btn btn-primary"
+                  [routerLink]="['/orders', order.orderId]">
+            Sprawdź szczegóły
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

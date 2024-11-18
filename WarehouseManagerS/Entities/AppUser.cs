@@ -1,4 +1,4 @@
-﻿namespace WarehouseManagerS.Entities;
+﻿namespace WarehouseManager.API.Entities;
 public class AppUser
 {
     public int Id { get; set; }

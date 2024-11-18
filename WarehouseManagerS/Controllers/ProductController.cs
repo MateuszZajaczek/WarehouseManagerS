@@ -1,124 +1,112 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WarehouseManagerS.Data;
-using WarehouseManagerS.Entities;
-using WarehouseManager.Dto;
+using WarehouseManager.API.Dto;
+using WarehouseManager.API.Interfaces;
+using WarehouseManager.API.Controllers;
+
 
 namespace WarehouseManagerS.Controllers
 {
-    [Authorize(Policy = "RequireStaffRole")]
+    //[Authorize(Policy = "RequireStaffRole")]
     [ApiController]
     [Route("api/[controller]")]
 
-    public class ProductsController : BaseApiController
+    public class ProductsController(IProductRepository productRepository) : BaseApiController
     {
-        private readonly DataContext _context;
-
-        public ProductsController(DataContext context)
-        {
-            _context = context;
-        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            var products = await _context.Products
-                .Include(p => p.Category)
-                .Select(p => new ProductDto
-                {
-                    Id = p.ProductId,
-                    Name = p.ProductName,
-                    Quantity = p.QuantityInStock,
-                    Category = p.Category.CategoryName // Assuming Category has a Name property
-                                               // Map other properties as needed
-                })
-                .ToListAsync();
+            var products = await productRepository.GetProductsAsync();
+            var productDtos = products.Select(p => new ProductDto
+            {
+                ProductId = p.ProductId,
+                ProductName = p.ProductName,
+                QuantityInStock = p.QuantityInStock,
+                CategoryName = p.Category.CategoryName, // Assuming Category has a Name property
+                UnitPrice = p.UnitPrice,
+            }).ToList();
 
-            return Ok(products);
+            return Ok(productDtos);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductDto>> GetProduct(int id)
+        public async Task<ProductDto?> GetProductByIdAsync(int id)
         {
-            var product = await _context.Products
-                .Include(p => p.Category)
-                .Where(p => p.ProductId == id)
-                .Select(p => new ProductDto
-                {
-                    Id = p.ProductId,
-                    Name = p.ProductName,
-                    Quantity = p.QuantityInStock,
-                    Category = p.Category.CategoryName
-                    // Map other properties as needed
-                })
-                .FirstOrDefaultAsync();
+            var product = await productRepository.GetProductByIdAsync(id);
 
             if (product == null)
             {
-                return NotFound();
+                return null; // Jeśli produkt nie istnieje, zwróć null
             }
 
-            return Ok(product);
-        }
-
-
-        [HttpPost]
-        public async Task<ActionResult<Product>> AddProduct(Product Product)
-        {
-            _context.Products.Add(Product);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetProduct), new { id = Product.ProductId }, Product);
-        }
-
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditProduct(int id, Product Product)
-        {
-            if (id != Product.ProductId)
+            // Mapowanie na ProductDto
+            return new ProductDto
             {
-                return BadRequest();
-            }
-
-            _context.Entry(Product).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                QuantityInStock = product.QuantityInStock,
+                CategoryName = product.Category?.CategoryName, // Mapowanie kategorii
+                UnitPrice = product.UnitPrice,
+            };
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
-        {
-            var Product = await _context.Products.FindAsync(id);
-            if (Product == null)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //public async Task<ActionResult<Product>> AddProduct(Product Product)
+        //{
+        //    productRepository.Products.Add(Product);
+        //    await _context.SaveChangesAsync();
+        //    return CreatedAtAction(nameof(GetProduct), new { id = Product.ProductId }, Product);
+        //}
 
-            _context.Products.Remove(Product);
-            await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> EditProduct(int id, Product Product)
+        //{
+        //    if (id != Product.ProductId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.ProductId == id);
-        }
+        //    _context.Entry(Product).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ProductExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteProduct(int id)
+        //{
+        //    var Product = await _context.Products.FindAsync(id);
+        //    if (Product == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _context.Products.Remove(Product);
+        //    await _context.SaveChangesAsync();
+
+        //    return NoContent();
+        //}
+
+        //private bool ProductExists(int id)
+        //{
+        //    return _context.Products.Any(e => e.ProductId == id);
+        //}
     }
 }

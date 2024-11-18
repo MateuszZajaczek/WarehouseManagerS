@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using WarehouseManagerS.Controllers;
-using WarehouseManagerS.Data;
-using WarehouseManagerS.Entities;
+using WarehouseManager.API.Data;
+using WarehouseManager.API.Entities;
 using Microsoft.AspNetCore.Authorization;
 
-namespace WarehouseManagerS
+namespace WarehouseManager.API.Controllers
 {
     public class BuggyController(DataContext context) : BaseApiController
     {

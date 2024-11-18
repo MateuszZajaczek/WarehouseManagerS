@@ -18,9 +18,9 @@
           <a routerLink="/returns" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Zwroty</a>
         </li>
         }
-        <li class="nav-item">
-  <a routerLink="/errors" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Errors</a>
-</li>
+        <li>
+          <a routerLink="/neworder" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Dodaj zamówienie</a>
+        </li>
       </ul>
 
     </div>
@@ -29,7 +29,7 @@
     @if(accountService.currentUser()){
     <div dropdown class="dropdown">
       <a dropdownToggle class="dropdown-toggle text-light cursor-pointer">Witaj {{
-        accountService.currentUser()?.username }}</a>
+        accountService.currentUser()?.userName }}</a>
       <div *dropdownMenu class="dropdown-menu">
         <a class="dropdown-item">Edytuj profil</a>
         <!-- ADMIN DROPDOWN MENU START-->
@@ -47,7 +47,7 @@
 
     @if (!accountService.currentUser()){
     <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex ms-auto" autocomplete="off">
-      <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="Username">
+      <input name="userName" [(ngModel)]="model.userName" class="form-control me-2" placeholder="userName">
       <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="Password"
         type="password">
       <button class="btn btn-outline-success" type="submit">Login</button>

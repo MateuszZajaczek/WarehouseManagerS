@@ -1,6 +1,9 @@
 export interface Product {
-  id: number;
-  name: string;
-  quantity: number;
-  category: string;
+  productId: number;
+  productName: string;
+  quantityInStock: number;
+  categoryName: string;
+  unitPrice: number;
+  // currency notImplented maybe in future with API
 }
+

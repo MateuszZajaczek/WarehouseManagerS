@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WarehouseManagerS.Data;
+using WarehouseManager.API.Data;
 
 #nullable disable
 
@@ -22,7 +22,7 @@ namespace WarehouseManager.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.AppUser", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace WarehouseManager.API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Category", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -77,7 +77,7 @@ namespace WarehouseManager.API.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.InventoryTransaction", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.InventoryTransaction", b =>
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
@@ -111,7 +111,7 @@ namespace WarehouseManager.API.Migrations
                     b.ToTable("InventoryTransactions");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Order", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace WarehouseManager.API.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.OrderItem", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.OrderItem", b =>
                 {
                     b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
@@ -158,6 +158,9 @@ namespace WarehouseManager.API.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -170,7 +173,7 @@ namespace WarehouseManager.API.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Product", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -214,7 +217,7 @@ namespace WarehouseManager.API.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Return", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Return", b =>
                 {
                     b.Property<int>("ReturnId")
                         .ValueGeneratedOnAdd()
@@ -249,7 +252,7 @@ namespace WarehouseManager.API.Migrations
                     b.ToTable("Returns");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.ReturnItem", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.ReturnItem", b =>
                 {
                     b.Property<int>("ReturnItemId")
                         .ValueGeneratedOnAdd()
@@ -281,9 +284,9 @@ namespace WarehouseManager.API.Migrations
                     b.ToTable("ReturnItems");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.InventoryTransaction", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.InventoryTransaction", b =>
                 {
-                    b.HasOne("WarehouseManagerS.Entities.Product", "Product")
+                    b.HasOne("WarehouseManager.API.Entities.Product", "Product")
                         .WithMany("InventoryTransactions")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -292,9 +295,9 @@ namespace WarehouseManager.API.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Order", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Order", b =>
                 {
-                    b.HasOne("WarehouseManagerS.Entities.AppUser", "User")
+                    b.HasOne("WarehouseManager.API.Entities.AppUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -303,15 +306,15 @@ namespace WarehouseManager.API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.OrderItem", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.OrderItem", b =>
                 {
-                    b.HasOne("WarehouseManagerS.Entities.Order", "Order")
+                    b.HasOne("WarehouseManager.API.Entities.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WarehouseManagerS.Entities.Product", "Product")
+                    b.HasOne("WarehouseManager.API.Entities.Product", "Product")
                         .WithMany("OrderItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -322,9 +325,9 @@ namespace WarehouseManager.API.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Product", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Product", b =>
                 {
-                    b.HasOne("WarehouseManagerS.Entities.Category", "Category")
+                    b.HasOne("WarehouseManager.API.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -332,15 +335,15 @@ namespace WarehouseManager.API.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Return", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Return", b =>
                 {
-                    b.HasOne("WarehouseManagerS.Entities.Order", "Order")
+                    b.HasOne("WarehouseManager.API.Entities.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("WarehouseManagerS.Entities.AppUser", "User")
+                    b.HasOne("WarehouseManager.API.Entities.AppUser", "User")
                         .WithMany("Returns")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -351,15 +354,15 @@ namespace WarehouseManager.API.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.ReturnItem", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.ReturnItem", b =>
                 {
-                    b.HasOne("WarehouseManagerS.Entities.OrderItem", "OrderItem")
+                    b.HasOne("WarehouseManager.API.Entities.OrderItem", "OrderItem")
                         .WithMany("ReturnItems")
                         .HasForeignKey("OrderItemId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("WarehouseManagerS.Entities.Return", "Return")
+                    b.HasOne("WarehouseManager.API.Entities.Return", "Return")
                         .WithMany("ReturnItems")
                         .HasForeignKey("ReturnId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -370,36 +373,36 @@ namespace WarehouseManager.API.Migrations
                     b.Navigation("Return");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.AppUser", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.AppUser", b =>
                 {
                     b.Navigation("Orders");
 
                     b.Navigation("Returns");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Category", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Order", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.OrderItem", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.OrderItem", b =>
                 {
                     b.Navigation("ReturnItems");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Product", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Product", b =>
                 {
                     b.Navigation("InventoryTransactions");
 
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("WarehouseManagerS.Entities.Return", b =>
+            modelBuilder.Entity("WarehouseManager.API.Entities.Return", b =>
                 {
                     b.Navigation("ReturnItems");
                 });

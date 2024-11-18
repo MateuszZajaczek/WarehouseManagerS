@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
-using WarehouseManagerS.Data;
-using WarehouseManagerS.Dto;
-using WarehouseManagerS.Entities;
-using WarehouseManagerS.Interfaces;
+using WarehouseManager.API.Data;
+using WarehouseManager.API.Dto;
+using WarehouseManager.API.Entities;
+using WarehouseManager.API.Interfaces;
 
-namespace WarehouseManagerS.Controllers
+
+namespace WarehouseManager.API.Controllers
 {
     public class AccountController : BaseApiController
     {
