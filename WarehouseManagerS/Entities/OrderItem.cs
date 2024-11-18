@@ -13,8 +13,7 @@ namespace WarehouseManager.API.Entities
         public int Quantity { get; set; }
 
         public decimal UnitPrice { get; set; } // Captured at order time
-
-        public decimal TotalPrice => Quantity * UnitPrice;
+        public decimal TotalPrice { get; set; } // Store calculated total price
 
         // Navigation Properties
         [ForeignKey("OrderId")]

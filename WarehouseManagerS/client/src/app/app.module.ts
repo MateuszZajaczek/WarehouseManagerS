@@ -21,6 +21,9 @@ import { provideToastr } from 'ngx-toastr';
 import { AdminRegisterComponent } from './_components/admin/register/register-form.component';
 import { AdminPanelComponent } from './_components/admin/admin-panel/admin-panel.component';
 import { AuthInterceptor } from './_interceptors/auth.interceptor';
+import { NewOrderFormComponent } from './_components/new-order-form/new-order-form.component';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { OrderDetailComponent } from './_components/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,10 @@ import { AuthInterceptor } from './_interceptors/auth.interceptor';
     NavComponent,
     AdminRegisterComponent,
     AdminPanelComponent,
+    NewOrderFormComponent,
+    UserDetailComponent,
+    OrderDetailComponent,
+
     ],
 
   imports: [
@@ -46,10 +53,14 @@ import { AuthInterceptor } from './_interceptors/auth.interceptor';
     FormsModule,
     RouterLink,
     RouterLinkActive,
+    CommonModule,
     BsDropdownModule.forRoot(),
     
 
   ],
+
+  exports:
+  [NewOrderFormComponent],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     ProductService,
   provideAnimations(),

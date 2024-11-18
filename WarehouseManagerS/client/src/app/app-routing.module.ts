@@ -9,11 +9,13 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
 import { adminGuard } from './_guard/admin.guard';
 import { AdminRegisterComponent } from './_components/admin/register/register-form.component';
 import { AdminPanelComponent } from './_components/admin/admin-panel/admin-panel.component';
+import { NewOrderFormComponent } from './_components/new-order-form/new-order-form.component';
+import { OrderDetailComponent } from './_components/order-detail/order-detail.component';
 // Importuj inne komponenty według potrzeb
 
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, // Ścieżka do strony głównej
+  // Logged in users.
   {
     path: '',
     runGuardsAndResolvers: 'always',
@@ -22,13 +24,18 @@ export const routes: Routes = [
       { path: 'products', component: ProductListComponent }, // Ścieżka do listy przedmiotów
       { path: 'orders', component: OrdersListComponent }, // Ścieżka do listy zamówień
       { path: 'returns', component: ReturnsListComponent }, // Ścieżka do listy zwrotów
+      { path: 'orders/id', component: OrderDetailComponent}, // Ścieżka do szczegółów zamówienia
     ]
   },
-  {path: 'register', component: AdminRegisterComponent, canActivate: [adminGuard] }, // Ścieżka do rejestracji administratora
-  {path: 'AdminPanel', component: AdminPanelComponent, canActivate: [adminGuard] }, // Ścieżka do panelu administratora
 
-  { path: 'errors', component: TestErrorsComponent }, // Ścieżka do testowania błędów
-  { path: '**', component: HomeComponent, pathMatch: 'full' }, //Ścieżka do strony głównej
+  // Admin only
+      { path: 'register', component: AdminRegisterComponent, canActivate: [adminGuard] }, // Ścieżka do rejestracji administratora
+      { path: 'AdminPanel', component: AdminPanelComponent, canActivate: [adminGuard] }, // Ścieżka do panelu administratora
+      { path: 'neworder', component: NewOrderFormComponent, canActivate: [adminGuard] },
+  // Everyone
+      { path: 'errors', component: TestErrorsComponent }, // Ścieżka do testowania błędów
+      { path: '**', component: HomeComponent, pathMatch: 'full' }, //Ścieżka do strony głównej
+      { path: '', component: HomeComponent }, // Ścieżka do strony głównej
 ];
 
 

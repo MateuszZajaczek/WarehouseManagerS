@@ -7,7 +7,7 @@ using WarehouseManager.API.Controllers;
 
 namespace WarehouseManagerS.Controllers
 {
-    [Authorize(Policy = "RequireStaffRole")]
+    //[Authorize(Policy = "RequireStaffRole")]
     [ApiController]
     [Route("api/[controller]")]
 
@@ -18,14 +18,13 @@ namespace WarehouseManagerS.Controllers
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
             var products = await productRepository.GetProductsAsync();
-
-
             var productDtos = products.Select(p => new ProductDto
             {
-                Id = p.ProductId,
-                Name = p.ProductName,
-                Quantity = p.QuantityInStock,
-                Category = p.Category.CategoryName // Assuming Category has a Name property
+                ProductId = p.ProductId,
+                ProductName = p.ProductName,
+                QuantityInStock = p.QuantityInStock,
+                CategoryName = p.Category.CategoryName, // Assuming Category has a Name property
+                UnitPrice = p.UnitPrice,
             }).ToList();
 
             return Ok(productDtos);
@@ -44,10 +43,11 @@ namespace WarehouseManagerS.Controllers
             // Mapowanie na ProductDto
             return new ProductDto
             {
-                Id = product.ProductId,
-                Name = product.ProductName,
-                Quantity = product.QuantityInStock,
-                Category = product.Category?.CategoryName // Mapowanie kategorii
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                QuantityInStock = product.QuantityInStock,
+                CategoryName = product.Category?.CategoryName, // Mapowanie kategorii
+                UnitPrice = product.UnitPrice,
             };
         }
 

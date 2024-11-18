@@ -9,8 +9,16 @@ import { map } from 'rxjs';
 export class AccountService {
 
   private http = inject(HttpClient);
-  baseUrl = 'https://localhost:5001/';
+  baseUrl = 'https://localhost:5133/';
   currentUser = signal<User | null>(null);
+
+  constructor() {
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      const user: User = JSON.parse(userJson);
+      this.currentUser.set(user);
+    }
+  }
 
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(

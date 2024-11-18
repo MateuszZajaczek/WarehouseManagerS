@@ -1,0 +1,77 @@
+<div class="container">
+  <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="userName">Użytkownik</label>
+        <input id="userName"
+               type="text"
+               class="form-control"
+               [value]="currentUser?.userName"
+               readonly />
+      </div>
+    </div>
+
+    <div formArrayName="orderItems">
+      <div *ngFor="let item of orderItems.controls; let i = index"
+           [formGroupName]="i"
+           class="order-item">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="productId">Product</label>
+            <select id="productId"
+                    formControlName="productId"
+                    class="form-control"
+                    required>
+              <option value="">Select a product</option>
+              <option *ngFor="let product of products"
+                      [value]="product.productId">
+                {{ product.productName }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="quantity">Quantity</label>
+            <input id="quantity"
+                   formControlName="quantity"
+                   type="number"
+                   class="form-control"
+                   min="1"
+                   required />
+          </div>
+          <div class="form-group col-md-2">
+            <label>Unit Price</label>
+            <input formControlName="unitPrice"
+                   type="number"
+                   class="form-control"
+                   readonly />
+          </div>
+          <div class="form-group col-md-2">
+            <label>Total Price</label>
+            <input formControlName="totalPrice"
+                   type="number"
+                   class="form-control"
+                   readonly />
+          </div>
+          <div class="form-group col-md-2 align-self-end">
+            <button type="button"
+                    class="btn btn-danger"
+                    (click)="removeOrderItem(i)">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+      <button type="button"
+              class="btn btn-primary mt-2"
+              (click)="addOrderItem()">
+        Add Item
+      </button>
+    </div>
+
+    <div class="form-group mt-3">
+      <h4>Total Amount: {{ totalAmount | currency:'PLN ' }}</h4>
+    </div>
+
+    <button type="submit" class="btn btn-success">Dodaj zamówienie</button>
+  </form>
+</div>
