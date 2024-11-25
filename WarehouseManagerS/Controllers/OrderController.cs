@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WarehouseManager.API.Entities;
-using WarehouseManager.API.Services;
+using WarehouseManager.API.Interfaces;
 using WarehouseManager.API.DTOs;
 
 namespace WarehouseManager.API.Controllers
@@ -9,14 +9,13 @@ namespace WarehouseManager.API.Controllers
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderService _orderService; // Order service
+        private readonly IOrderService _orderService;
 
         public OrdersController(IOrderService orderService)
         {
-            _orderService = orderService; // Inject the service
+            _orderService = orderService; 
         }
 
-        // GET: api/orders
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders()
         {
@@ -45,8 +44,6 @@ namespace WarehouseManager.API.Controllers
             return Ok(ordersDto);
         }
 
-
-        // GET: api/orders/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
@@ -80,8 +77,6 @@ namespace WarehouseManager.API.Controllers
             return Ok(orderDto);
         }
 
-
-        // POST: api/orders
         [HttpPost]
         public async Task<ActionResult> CreateOrder(OrderDto orderDto)
         {
@@ -114,9 +109,6 @@ namespace WarehouseManager.API.Controllers
             return Ok("Order canceled successfully.");
         }
 
-
-
-        // PUT: api/orders/{id}/accept
         [HttpPut("{id}/accept")]
         public async Task<ActionResult> AcceptOrder(int id)
         {

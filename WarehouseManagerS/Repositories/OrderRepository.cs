@@ -34,9 +34,9 @@ namespace WarehouseManager.API.Repositories
         {
             // Get order by ID with User, OrderItems, and Products for each OrderItem
             return await _context.Orders
-                .Include(o => o.User) // Dołączenie użytkownika zamówienia
-                .Include(o => o.OrderItems) // Dołączenie pozycji zamówienia
-                    .ThenInclude(oi => oi.Product) // Dołączenie produktu do każdej pozycji zamówienia
+                .Include(o => o.User) // Add user to order in DB
+                .Include(o => o.OrderItems) // Add position to order in DB
+                    .ThenInclude(oi => oi.Product) // Add product to every position in order.
                 .FirstOrDefaultAsync(o => o.OrderId == id);
         }
 

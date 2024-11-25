@@ -22,7 +22,7 @@
                     formControlName="productId"
                     class="form-control"
                     required>
-              <option value="">Select a product</option>
+              <option value="">Wybierz produkt</option>
               <option *ngFor="let product of products"
                       [value]="product.productId">
                 {{ product.productName }}
@@ -30,7 +30,7 @@
             </select>
           </div>
           <div class="form-group col-md-2">
-            <label for="quantity">Quantity</label>
+            <label for="quantity">Ilość</label>
             <input id="quantity"
                    formControlName="quantity"
                    type="number"
@@ -39,14 +39,14 @@
                    required />
           </div>
           <div class="form-group col-md-2">
-            <label>Unit Price</label>
+            <label>Cena jednostkowa</label>
             <input formControlName="unitPrice"
                    type="number"
                    class="form-control"
                    readonly />
           </div>
           <div class="form-group col-md-2">
-            <label>Total Price</label>
+            <label>Suma całkowita</label>
             <input formControlName="totalPrice"
                    type="number"
                    class="form-control"
