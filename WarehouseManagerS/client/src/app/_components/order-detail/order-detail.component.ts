@@ -1,6 +1,5 @@
-// order-detail.component.ts
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../../_services/order.service';
 import { Order } from '../../_models/order';
 
@@ -12,16 +11,17 @@ import { Order } from '../../_models/order';
 export class OrderDetailComponent implements OnInit {
   orderId: number | null = null;
   order: Order | null = null;
-
-  constructor(
-    private route: ActivatedRoute,
-    private orderService: OrderService
-  ) { }
+  orderService = inject(OrderService)
+  private router = inject(Router);
+  private route = inject(ActivatedRoute); 
 
   ngOnInit(): void {
     this.orderId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.orderId) {
       this.loadOrder();
+    } else {
+      console.log('Nieprawidłowe ID zamówienia');
+      // Możesz przekierować użytkownika lub wyświetlić komunikat o błędzie
     }
   }
 

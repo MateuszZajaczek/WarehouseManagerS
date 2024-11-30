@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WarehouseManager.API.Dto;
 using WarehouseManager.API.Data;
 using WarehouseManager.API.Entities;
 using WarehouseManager.API.Interfaces;

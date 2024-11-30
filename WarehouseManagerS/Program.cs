@@ -54,6 +54,8 @@ namespace WarehouseManagerS
                 });
 
 
+
+
             // Authorization method based on roles.
             builder.Services.AddAuthorization(options =>
                 {

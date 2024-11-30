@@ -1,6 +1,6 @@
 ﻿using WarehouseManager.API.Entities;
 
-namespace WarehouseManager.API.Services
+namespace WarehouseManager.API.Interfaces
 {
     public interface IOrderService
     {

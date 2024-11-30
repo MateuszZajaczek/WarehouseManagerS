@@ -1,111 +1,118 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrderService } from '../../_services/order.service';
 import { ProductService } from '../../_services/product.service';
+import { AccountService } from '../../_services/account.service';
 import { Product } from '../../_models/product';
-import { Order } from '../../_models/order';
-import { AccountService } from '../../_services/account.service'; // Adjust the path
 import { User } from '../../_models/user';
+
+interface OrderItem {
+  productId: number;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+}
 
 @Component({
   selector: 'app-new-order-form',
   templateUrl: './new-order-form.component.html',
-  styleUrls: ['./new-order-form.component.css'],
+  styleUrl: './new-order-form.component.css',
 })
 export class NewOrderFormComponent implements OnInit {
   orderForm: FormGroup;
   products: Product[] = [];
   totalAmount: number = 0;
   currentUser: User | null = null;
+  orderItems: OrderItem[] = []; // Tablica przechowująca dodane produkty
 
   constructor(
     private fb: FormBuilder,
     private orderService: OrderService,
     private productService: ProductService,
-    private accountService: AccountService // Inject AccountService
+    private accountService: AccountService
   ) {
     this.orderForm = this.fb.group({
       userName: [null, Validators.required],
-      orderItems: this.fb.array([]),
+      productId: [null, Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
     });
   }
 
   ngOnInit(): void {
     this.loadProducts();
-    this.addOrderItem(); // Start with one order item
-
-    // Set userId to current user's ID
     this.currentUser = this.accountService.currentUser();
     if (this.currentUser) {
-      this.orderForm.get('userName')?.setValue(this.currentUser.userName); 
+      this.orderForm.get('userName')?.setValue(this.currentUser.userName);
     }
   }
 
   loadProducts() {
     this.productService.getProducts().subscribe({
       next: (products) => (this.products = products),
-      error: (error) => console.log('Error loading products:', error),
+      error: (error) => console.log('Błąd podczas ładowania produktów:', error),
     });
-  }
-
-  get orderItems(): FormArray {
-    return this.orderForm.get('orderItems') as FormArray;
   }
 
   addOrderItem() {
-    const orderItemGroup = this.fb.group({
-      productId: [null, Validators.required],
-      quantity: [1, [Validators.required, Validators.min(1)]],
-      unitPrice: [0],
-      totalPrice: [0],
-    });
+    const productId = Number(this.orderForm.get('productId')?.value);
+    const quantity = this.orderForm.get('quantity')?.value;
+    const product = this.products.find((p) => p.productId === productId);
 
-    // Update unit price and total price when product or quantity changes
-    orderItemGroup.get('productId')?.valueChanges.subscribe((productId) => {
-      const product = this.products.find((p) => p.productId == productId);
-      if (product) {
-        orderItemGroup.get('unitPrice')?.setValue(product.unitPrice);
-        this.updateItemTotalPrice(orderItemGroup);
-      }
-    });
+    if (product && quantity > 0) {
+      const unitPrice = product.unitPrice;
+      const totalPrice = unitPrice * quantity;
 
-    orderItemGroup.get('quantity')?.valueChanges.subscribe(() => {
-      this.updateItemTotalPrice(orderItemGroup);
-    });
+      const orderItem: OrderItem = {
+        productId: productId,
+        productName: product.productName,
+        quantity: quantity,
+        unitPrice: unitPrice,
+        totalPrice: totalPrice,
+      };
 
-    this.orderItems.push(orderItemGroup);
-  }
+      this.orderItems.push(orderItem);
+      this.updateTotalAmount();
 
-  removeOrderItem(index: number) {
-    this.orderItems.removeAt(index);
-    this.updateTotalAmount();
-  }
-
-  updateItemTotalPrice(orderItemGroup: FormGroup) {
-    const quantity = orderItemGroup.get('quantity')?.value || 0;
-    const unitPrice = orderItemGroup.get('unitPrice')?.value || 0;
-    const totalPrice = quantity * unitPrice;
-    orderItemGroup.get('totalPrice')?.setValue(totalPrice);
-    this.updateTotalAmount();
+      // Resetuj pola formularza
+      this.orderForm.get('productId')?.setValue(null);
+      this.orderForm.get('quantity')?.setValue(1);
+    }
   }
 
   updateTotalAmount() {
-    this.totalAmount = this.orderItems.controls.reduce((sum, item) => {
-      return sum + (item.get('totalPrice')?.value || 0);
-    }, 0);
+    this.totalAmount = this.orderItems.reduce(
+      (sum, item) => sum + item.totalPrice,
+      0
+    );
+  }
+
+  editOrderItem(index: number) {
+    const item = this.orderItems[index];
+    // Ustaw wartości formularza na wartości wybranego produktu
+    this.orderForm.get('productId')?.setValue(item.productId);
+    this.orderForm.get('quantity')?.setValue(item.quantity);
+    // Usuń produkt z listy, aby można go było ponownie dodać po edycji
+    this.orderItems.splice(index, 1);
+    this.updateTotalAmount();
+  }
+
+  removeOrderItem(index: number) {
+    this.orderItems.splice(index, 1);
+    this.updateTotalAmount();
   }
 
   submitOrder() {
-    if (this.orderForm.invalid) {
+    if (this.orderItems.length === 0) {
       return;
     }
 
-    const order: Order = {
-      userId: this.orderForm.get('userId')?.value,
-      userName: '', // Or fetch/set the appropriate value
+    const order = {
+      userId: this.currentUser?.userId || 0,
+      userName: this.orderForm.get('userName')?.value,
       totalAmount: this.totalAmount,
-      orderStatus: 'Pending', // Set default status
-      orderItems: this.orderItems.value.map((item: any) => ({
+      orderStatus: 'Pending',
+      orderItems: this.orderItems.map((item) => ({
         productId: item.productId,
         quantity: item.quantity,
         unitPrice: item.unitPrice,
@@ -115,14 +122,14 @@ export class NewOrderFormComponent implements OnInit {
 
     this.orderService.createOrder(order).subscribe({
       next: () => {
-        console.log('Order created successfully');
-        // Reset form or navigate away
+        console.log('Zamówienie utworzone pomyślnie');
+        // Resetuj formularz i listę produktów
         this.orderForm.reset();
-        this.orderItems.clear();
-        this.addOrderItem();
+        this.orderItems = [];
         this.totalAmount = 0;
+        this.orderForm.get('quantity')?.setValue(1);
       },
-      error: (error) => console.log('Error creating order:', error),
+      error: (error) => console.log('Błąd podczas tworzenia zamówienia:', error),
     });
   }
 }
