@@ -42,6 +42,7 @@ export class NewOrderFormComponent implements OnInit {
   ngOnInit(): void {
     this.loadProducts();
     this.currentUser = this.accountService.currentUser();
+    console.log(this.currentUser);
     if (this.currentUser) {
       this.orderForm.get('userName')?.setValue(this.currentUser.userName);
     }
@@ -119,17 +120,20 @@ export class NewOrderFormComponent implements OnInit {
         totalPrice: item.totalPrice,
       })),
     };
-
-    this.orderService.createOrder(order).subscribe({
-      next: () => {
-        console.log('Zamówienie utworzone pomyślnie');
-        // Resetuj formularz i listę produktów
-        this.orderForm.reset();
-        this.orderItems = [];
-        this.totalAmount = 0;
-        this.orderForm.get('quantity')?.setValue(1);
-      },
-      error: (error) => console.log('Błąd podczas tworzenia zamówienia:', error),
+    console.log(this.currentUser);
+    //this.orderService.createOrder(order).subscribe({
+    //  next: () => {
+    //    console.log('Zamówienie utworzone pomyślnie');
+    //    // Resetuj formularz i listę produktów
+    //    this.orderForm.reset();
+    //    this.orderItems = [];
+    //    this.totalAmount = 0;
+    //    this.orderForm.get('quantity')?.setValue(1);
+    //  },
+    //  error: (error) => console.log('Błąd podczas tworzenia zamówienia:', error),
+    //});
+    this.orderService.createOrder(order).subscribe(response => {
+      console.log(response);
     });
   }
 }

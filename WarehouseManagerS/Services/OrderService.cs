@@ -68,10 +68,7 @@ namespace WarehouseManager.API.Services
 
             // Save changes
             var orderSaved = await _orderRepository.SaveAllAsync();
-            var productSaved = await _productRepository.SaveAllAsync();
-            var transactionSaved = await _inventoryTransactionRepository.SaveAllAsync();
-
-            return orderSaved && productSaved && transactionSaved;
+            return orderSaved;
         }
 
 

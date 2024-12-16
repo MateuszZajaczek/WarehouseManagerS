@@ -47,10 +47,10 @@
 
     @if (!accountService.currentUser()){
     <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex ms-auto" autocomplete="off">
-      <input name="userName" [(ngModel)]="model.userName" class="form-control me-2" placeholder="userName">
-      <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="Password"
+      <input name="userName" [(ngModel)]="model.userName" class="form-control me-2" placeholder="Nazwa użytkownika">
+      <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="Hasło"
         type="password">
-      <button class="btn btn-outline-success" type="submit">Login</button>
+      <button class="btn btn-outline-success" type="submit">Zaloguj</button>
     </form>
     }
   </div>
