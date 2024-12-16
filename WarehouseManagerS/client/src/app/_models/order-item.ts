@@ -3,6 +3,6 @@ export interface OrderItem {
   productId: number;
   productName?: string; // Optional, for display purposes
   quantity: number;
-  unitPrice?: number;
-  totalPrice?: number;
+  unitPrice: number;
+  totalPrice: number;
 }

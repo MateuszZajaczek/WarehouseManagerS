@@ -25,6 +25,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (error) {
           switch (error.status) {
+            case 200: console.log("case 200");
+              break;
             case 400:
               if (error.error.errors) {
                 const modalStateErrors: string[] = [];
@@ -59,10 +61,10 @@ export class ErrorInterceptor implements HttpInterceptor {
               };
               this.router.navigateByUrl('/server-error', navigationExtras);
               break;
-            default:
-              this.toastr.error('Coś poszło nie tak');
-              console.error(error);
-              break;
+            //default:
+            //  this.toastr.error('Coś poszło nie tak');
+            //  console.error(error);
+            //  break;
           }
         }
         return throwError(() => error);

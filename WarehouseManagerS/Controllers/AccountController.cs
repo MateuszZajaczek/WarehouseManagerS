@@ -42,6 +42,7 @@ namespace WarehouseManager.API.Controllers
 
             var userDto = new UserDto
             {
+                UserId = user.Id,
                 UserName = user.UserName,
                 Token = token,
                 Role = user.Role.ToString() 
