@@ -35,18 +35,7 @@ export class AccountService {
   }
 
   register(model: any) {
-    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
-      map(user => {
-        if (user && user.token) {
-          // Zapisz token do localStorage
-          localStorage.setItem('token', user.token);
-          // Zapisz użytkownika do localStorage
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUser.set(user);
-        }
-        return user;
-      })
-    );
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe();
   }
 
   logout() {

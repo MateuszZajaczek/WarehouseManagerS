@@ -25,8 +25,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (error) {
           switch (error.status) {
-            case 200: console.log("case 200");
-              break;
+            //case 200: console.log("All good - 200");
+            //  break;
+            //case 204: console.log("Everything works fine - 204");
+            //  break;
             case 400:
               if (error.error.errors) {
                 const modalStateErrors: string[] = [];
@@ -46,10 +48,10 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 401:
-              this.toastr.error('Brak autoryzacji', error.status.toString());
+              this.toastr.error('Brak autoryzacji 401', error.status.toString());
               break;
               case 403:
-              this.toastr.error('Brak autoryzacji', error.status.toString());
+              this.toastr.error('Brak autoryzacji 403', error.status.toString());
               break;
             case 404:
               this.toastr.error('Nieznaleziono', error.status.toString());

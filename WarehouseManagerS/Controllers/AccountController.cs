@@ -55,6 +55,7 @@ namespace WarehouseManager.API.Controllers
 
         public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
         {
+            Console.WriteLine($"Received payload: {registerDto}");
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
             using var hmac = new HMACSHA512();
 

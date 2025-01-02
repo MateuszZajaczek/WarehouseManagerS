@@ -23,6 +23,10 @@ export class AdminRegisterComponent {
   roles = ['Admin', 'Manager', 'Staff'];
 
   register() {
+    if (this.registerForm.invalid) {
+      this.toastr.error('Please fill all required fields correctly.');
+      return;
+    }
     this.accountService.register(this.registerForm.value).subscribe({
       next: () => {
         this.toastr.success('User registered successfully');
