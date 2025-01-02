@@ -7,6 +7,7 @@ using WarehouseManager.API.Data;
 using WarehouseManager.API.Interfaces;
 using WarehouseManager.API.Services;
 using WarehouseManager.API.Repositories;
+using System.Text.Json.Serialization;
 
 
 namespace WarehouseManagerS
@@ -19,7 +20,12 @@ namespace WarehouseManagerS
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews()
+
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
 
             builder.Services.AddDbContext<DataContext>(opt =>

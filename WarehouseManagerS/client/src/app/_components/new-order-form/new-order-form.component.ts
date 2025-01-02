@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrderService } from '../../_services/order.service';
 import { ProductService } from '../../_services/product.service';
 import { AccountService } from '../../_services/account.service';
 import { Product } from '../../_models/product';
 import { User } from '../../_models/user';
+import { ToastrService } from 'ngx-toastr';
 
 interface OrderItem {
   productId: number;
@@ -25,6 +26,7 @@ export class NewOrderFormComponent implements OnInit {
   totalAmount: number = 0;
   currentUser: User | null = null;
   orderItems: OrderItem[] = []; // Tablica przechowująca dodane produkty
+  private toastr = inject(ToastrService);
 
   constructor(
     private fb: FormBuilder,
@@ -120,20 +122,23 @@ export class NewOrderFormComponent implements OnInit {
         totalPrice: item.totalPrice,
       })),
     };
-    console.log(this.currentUser);
-    //this.orderService.createOrder(order).subscribe({
-    //  next: () => {
-    //    console.log('Zamówienie utworzone pomyślnie');
-    //    // Resetuj formularz i listę produktów
-    //    this.orderForm.reset();
-    //    this.orderItems = [];
-    //    this.totalAmount = 0;
-    //    this.orderForm.get('quantity')?.setValue(1);
-    //  },
-    //  error: (error) => console.log('Błąd podczas tworzenia zamówienia:', error),
-    //});
-    this.orderService.createOrder(order).subscribe(response => {
-      console.log(response);
+
+    // Single call to createOrder
+    this.orderService.createOrder(order).subscribe({
+      next: (res) => {
+        // Show a success toast
+        this.toastr.success('Zamówienie utworzono pomyślnie!', 'Sukces');
+
+        // Reset form & item list
+        this.orderForm.reset();
+        this.orderItems = [];
+        this.totalAmount = 0;
+        this.orderForm.get('quantity')?.setValue(1);
+      },
+      error: (error) => {
+        this.toastr.error('Nie udało się utworzyć zamówienia', 'Błąd');
+      },
     });
   }
+
 }

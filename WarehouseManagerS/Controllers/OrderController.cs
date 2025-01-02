@@ -95,7 +95,7 @@ namespace WarehouseManager.API.Controllers
             if (!success)
                 return BadRequest("Error creating order.");
 
-            return Ok("Order created successfully.");
+            return Ok(new { message = "Order created successfully." });
         }
 
         [HttpPost("{orderId}/cancel")]
@@ -117,7 +117,7 @@ namespace WarehouseManager.API.Controllers
             if (!success)
                 return BadRequest("Unable to accept order due to insufficient stock or order not found."); // Error response
 
-            return Ok("Order accepted and stock updated."); // Success response
+            return Ok(new {message = "Order accepted and stock updated." }); // Success response
         }
     }
 }

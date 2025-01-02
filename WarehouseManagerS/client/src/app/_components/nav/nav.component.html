@@ -11,16 +11,21 @@
           <a routerLink="orders" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Zamówienia</a>
         </li>
         <li class="nav-item">
-          <a routerLink="/products" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Lista
-            produktów</a>
+          <a routerLink="/products" class="nav-link" routerLinkActive="active" aria-current="page" href="#">
+            Lista
+            produktów
+          </a>
         </li>
         <li class="nav-item">
           <a routerLink="/returns" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Zwroty</a>
         </li>
         }
+        @if(accountService.currentUser()?.role === 'Admin')
+        {
         <li>
           <a routerLink="/neworder" class="nav-link" routerLinkActive="active" aria-current="page" href="#">Dodaj zamówienie</a>
         </li>
+        }
       </ul>
 
     </div>

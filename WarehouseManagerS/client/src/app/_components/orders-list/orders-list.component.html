@@ -1,34 +1,96 @@
-<!-- orders-list.component.html -->
 <div class="container">
+  <div class="row mb-3">
+    <!-- Filter by userName -->
+    <div class="col">
+      <label for="filterUser">Nazwa użytkownika:</label>
+      <input id="filterUser"
+             type="text"
+             class="form-control form-control-sm w-auto d-inline-block"
+             placeholder="Nazwa użytkownika"
+             [(ngModel)]="filterUser" />
+    </div>
+
+    <!-- Filter by date -->
+    <div class="col">
+      <label for="filterDate">Data zamówienia:</label>
+      <input id="filterDate"
+             type="date"
+             class="form-control form-control-sm w-auto d-inline-block"
+             [(ngModel)]="filterDate" />
+    </div>
+
+    <!-- Filter by status -->
+    <div class="col">
+      <label for="filterStatus">Status zamówienia:</label>
+      <select id="filterStatus"
+              [(ngModel)]="filterStatus"
+              class="form-control form-control-sm w-auto d-inline-block">
+        <option value="">(All)</option>
+        <option value="Anulowane">Anulowane</option>
+        <option value="W trakcie przygotowania">W trakcie przygotowania</option>
+        <option value="Wysłane">Wysłane</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- The table remains the same, except you iterate over filteredOrders() -->
   <table class="table table-striped">
     <thead>
       <tr>
-        <th align="center">ID zamówienia</th>
+        <th>ID zamówienia</th>
         <th>Użytkownik</th>
         <th>Data</th>
-        @if(accountService.currentUser()?.role === 'Admin'){
+        <!-- If user is Admin, show totalAmount -->
+        @if (accountService.currentUser()?.role === 'Admin') {
         <th>Łączna suma</th>
         }
         <th>Status</th>
         <th>Szczegóły</th>
+        <th>Akcje</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of orders">
+      <tr *ngFor="let order of filteredOrders()">
         <td>{{ order.orderId }}</td>
         <td>{{ order.userName }}</td>
-        <td>{{ order?.orderDate | date:'short' }}</td>
-        @if(accountService.currentUser()?.role === 'Admin'){
-        <td>{{ order?.totalAmount | currency: 'PLN ' }}</td>
+        <td>{{ order.orderDate | date: 'short' }}</td>
+        @if (accountService.currentUser()?.role === 'Admin') {
+        <td>{{ order.totalAmount | currency: 'PLN' }}</td>
         }
-
-        <td>{{ order?.orderStatus }}</td>
         <td>
-          <button class="btn btn-primary"
-                  [routerLink]="['/orders', order.orderId]">
-            Sprawdź szczegóły
+          <span [ngClass]="getStatusDotClass(order.orderStatus)"></span>
+          {{ order.orderStatus }}
+        </td>
+        <td>
+          <button class="btn btn-primary" [routerLink]="['/orders', order.orderId]">
+            Szczegóły
           </button>
         </td>
+        <td>
+          <!-- Accept Button -->
+          @if (accountService.currentUser()?.role === 'Admin') {
+          <button class="btn btn-success btn-sm"
+                  type="button"
+                  (click)="acceptOrder(order.orderId!)"
+                  [disabled]="order.orderStatus !== 'W trakcie przygotowania'">
+            Gotowe
+          </button>
+          }
+
+          <!-- Cancel Button -->
+          @if (accountService.currentUser()?.role === 'Admin') {
+          <button class="btn btn-danger btn-sm"
+                  type="button"
+                  (click)="cancelOrder(order.orderId!)"
+                  [disabled]="
+        order.orderStatus === 'Anulowane' ||
+        order.orderStatus !== 'W trakcie przygotowania'
+      ">
+            Anuluj
+          </button>
+          }
+        </td>
+
       </tr>
     </tbody>
   </table>

@@ -70,10 +70,6 @@ namespace WarehouseManager.API.Services
             var orderSaved = await _orderRepository.SaveAllAsync();
             return orderSaved;
         }
-
-
-
-
         public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
             return await _orderRepository.GetAllAsync(); // Get all orders
@@ -144,7 +140,7 @@ namespace WarehouseManager.API.Services
             }
 
             // Update order status
-            order.OrderStatus = "Przyjęte";
+            order.OrderStatus = "Wysłane";
             _orderRepository.Update(order);
 
             // Save changes
