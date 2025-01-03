@@ -14,6 +14,8 @@ import { OrderDetailComponent } from './_components/order-detail/order-detail.co
 
 
 export const routes: Routes = [
+
+  { path: '', component: HomeComponent }, // Ścieżka do strony głównej
   // Logged in users.
   {
     path: '',
@@ -33,7 +35,7 @@ export const routes: Routes = [
       { path: 'neworder', component: NewOrderFormComponent, canActivate: [adminGuard] },
   // Everyone
       { path: '**', component: HomeComponent, pathMatch: 'full' }, //Ścieżka do strony głównej
-      { path: '', component: HomeComponent }, // Ścieżka do strony głównej
+
 ];
 
 
