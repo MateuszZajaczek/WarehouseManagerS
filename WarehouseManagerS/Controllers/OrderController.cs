@@ -13,9 +13,9 @@ namespace WarehouseManager.API.Controllers
 
         public OrdersController(IOrderService orderService)
         {
-            _orderService = orderService; 
+            _orderService = orderService;
         }
-
+        // Get all orders.
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders()
         {
@@ -44,16 +44,17 @@ namespace WarehouseManager.API.Controllers
             return Ok(ordersDto);
         }
 
+        // Get the order by unique ID
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
-            var order = await _orderService.GetOrderByIdAsync(id); // Pobierz zamówienie o danym ID
+            var order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)
             {
-                return NotFound(); // Zwróć NotFound, jeśli zamówienie nie istnieje
+                return NotFound();
             }
 
-            // Ręczne mapowanie do OrderDto, aby uniknąć cyklicznych referencji
+            // Manual mapping to avoid reference loop.
             var orderDto = new OrderDto
             {
                 OrderId = order.OrderId,
@@ -77,6 +78,8 @@ namespace WarehouseManager.API.Controllers
             return Ok(orderDto);
         }
 
+
+        // Create new order
         [HttpPost]
         public async Task<ActionResult> CreateOrder(OrderDto orderDto)
         {
@@ -98,6 +101,7 @@ namespace WarehouseManager.API.Controllers
             return Ok(new { message = "Order created successfully." });
         }
 
+        // Cancel the order
         [HttpPost("{orderId}/cancel")]
         public async Task<IActionResult> CancelOrder(int orderId)
         {
@@ -109,15 +113,17 @@ namespace WarehouseManager.API.Controllers
             return Ok("Order canceled successfully.");
         }
 
+
+        // Accept the order
         [HttpPut("{id}/accept")]
         public async Task<ActionResult> AcceptOrder(int id)
         {
-            var success = await _orderService.AcceptOrderAsync(id); // Accept the order
+            var success = await _orderService.AcceptOrderAsync(id);
 
             if (!success)
-                return BadRequest("Unable to accept order due to insufficient stock or order not found."); // Error response
+                return BadRequest("Unable to accept order due to insufficient stock or order not found.");
 
-            return Ok(new {message = "Order accepted and stock updated." }); // Success response
+            return Ok(new { message = "Zamówienie przyjęte." });
         }
     }
 }

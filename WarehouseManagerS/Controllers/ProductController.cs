@@ -13,7 +13,7 @@ namespace WarehouseManagerS.Controllers
 
     public class ProductsController(IProductRepository productRepository) : BaseApiController
     {
-
+        // Get all products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
@@ -30,6 +30,7 @@ namespace WarehouseManagerS.Controllers
             return Ok(productDtos);
         }
 
+        // Get product by unique ID
         [HttpGet("{id}")]
         public async Task<ProductDto?> GetProductByIdAsync(int id)
         {
@@ -37,19 +38,22 @@ namespace WarehouseManagerS.Controllers
 
             if (product == null)
             {
-                return null; // Jeśli produkt nie istnieje, zwróć null
+                return null; 
             }
 
-            // Mapowanie na ProductDto
+            // Manual mapping to avoid loop reference.
             return new ProductDto
             {
                 ProductId = product.ProductId,
                 ProductName = product.ProductName,
                 QuantityInStock = product.QuantityInStock,
-                CategoryName = product.Category?.CategoryName, // Mapowanie kategorii
+                CategoryName = product.Category?.CategoryName,
                 UnitPrice = product.UnitPrice,
             };
         }
+        // NotImplemented yet.
+
+
 
         //[HttpPost]
         //public async Task<ActionResult<Product>> AddProduct(Product Product)

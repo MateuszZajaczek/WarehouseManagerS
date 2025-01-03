@@ -10,7 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
   else {
-    toastr.error('permission denied');
+    toastr.error('Nie masz uprawnień');
     return false;
   }
 };
