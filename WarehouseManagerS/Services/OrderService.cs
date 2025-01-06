@@ -17,6 +17,7 @@ namespace WarehouseManager.API.Services
             _inventoryTransactionRepository = inventoryTransactionRepository;
         }
 
+        // Create order method.
         public async Task<bool> CreateOrderAsync(Order order)
         {
             // Calculate total amount

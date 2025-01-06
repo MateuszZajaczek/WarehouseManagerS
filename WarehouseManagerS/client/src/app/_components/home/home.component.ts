@@ -40,9 +40,4 @@ export class HomeComponent implements OnInit {
     this.componentDestroyed.next(true);
     this.componentDestroyed.complete();
   }
-  // getUsers() {
-  //   this.http.get('https://localhost:5001/users').subscribe({
-  //     next: response => this.users = response,
-  //     error: error => console.log(error),
-  //     complete: () => console.log('Request has completed')
 }
