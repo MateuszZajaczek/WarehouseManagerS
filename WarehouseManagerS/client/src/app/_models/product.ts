@@ -4,6 +4,6 @@ export interface Product {
   quantityInStock: number;
   categoryName: string;
   unitPrice: number;
-  // currency notImplented maybe in future with API
+  // currency notImplented maybe in future with API??
 }
 

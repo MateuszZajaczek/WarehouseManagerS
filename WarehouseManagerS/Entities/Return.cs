@@ -6,9 +6,9 @@ namespace WarehouseManager.API.Entities
     {
         public int ReturnId { get; set; }
 
-        public int OrderId { get; set; } // Foreign key to Order
+        public int OrderId { get; set; } 
 
-        public int UserId { get; set; } // Foreign key to AppUser
+        public int UserId { get; set; } 
 
         public DateTime ReturnDate { get; set; } = DateTime.UtcNow;
 
@@ -18,7 +18,7 @@ namespace WarehouseManager.API.Entities
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Navigation Properties
+        // Relation
         [ForeignKey("OrderId")]
         public Order Order { get; set; }
         [ForeignKey("UserId")]

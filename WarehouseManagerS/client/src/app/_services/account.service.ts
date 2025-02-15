@@ -24,8 +24,8 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map(user => {
         if (user && user.token) {
-          localStorage.setItem('token', user.token); // Saving token in localStorage
-          localStorage.setItem('user', JSON.stringify(user)); // Saving user to localStorage
+          localStorage.setItem('token', user.token); // Save token in localStorage
+          localStorage.setItem('user', JSON.stringify(user)); // Save user to localStorage
           this.currentUser.set(user);
         }
       })

@@ -11,8 +11,6 @@ import { AdminPanelComponent } from './_components/admin/admin-panel/admin-panel
 import { NewOrderFormComponent } from './_components/new-order-form/new-order-form.component';
 import { OrderDetailComponent } from './_components/order-detail/order-detail.component';
 
-
-
 export const routes: Routes = [
 
   { path: '', component: HomeComponent }, // MainPage 
@@ -35,9 +33,7 @@ export const routes: Routes = [
       { path: 'neworder', component: NewOrderFormComponent, canActivate: [adminGuard] }, //  NewOrder
   // Everyone
       { path: '**', component: HomeComponent, pathMatch: 'full' }, // Redirect to MainPage, for any address.
-
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

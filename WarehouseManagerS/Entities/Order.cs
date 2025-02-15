@@ -6,7 +6,7 @@ namespace WarehouseManager.API.Entities
     {
         public int OrderId { get; set; }
 
-        public int UserId { get; set; } // Foreign key to AppUser
+        public int UserId { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
 
@@ -16,7 +16,7 @@ namespace WarehouseManager.API.Entities
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Navigation Properties
+        // Relation
         [ForeignKey("UserId")]
         public AppUser User { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }

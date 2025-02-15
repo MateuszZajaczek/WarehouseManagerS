@@ -6,16 +6,16 @@ namespace WarehouseManager.API.Entities
     {
         public int OrderItemId { get; set; }
 
-        public int OrderId { get; set; } // Foreign key to Order
+        public int OrderId { get; set; } 
 
-        public int ProductId { get; set; } // Foreign key to Product
+        public int ProductId { get; set; } 
 
         public int Quantity { get; set; }
 
-        public decimal UnitPrice { get; set; } // Captured at order time
-        public decimal TotalPrice { get; set; } // Store calculated total price
+        public decimal UnitPrice { get; set; } 
+        public decimal TotalPrice { get; set; } 
 
-        // Navigation Properties
+        // Relation
         [ForeignKey("OrderId")]
         public Order Order { get; set; }
         [ForeignKey("ProductId")]

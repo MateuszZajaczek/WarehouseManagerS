@@ -1,5 +1,4 @@
 import { OrderItem } from "./order-item";
-
 export interface Order {
   orderId?: number;
   userId: number;

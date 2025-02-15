@@ -8,7 +8,7 @@
 
         public string Description { get; set; }
 
-        // Navigation Properties
+        // Relation
         public ICollection<Product> Products { get; set; }
     }
 }

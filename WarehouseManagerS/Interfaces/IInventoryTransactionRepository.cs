@@ -2,6 +2,6 @@
 
 public interface IInventoryTransactionRepository
 {
-    Task AddTransactionAsync(InventoryTransaction transaction); // Add a transaction
-    Task<bool> SaveAllAsync(); // Save changes to the database
+    Task AddTransactionAsync(InventoryTransaction transaction); 
+    Task<bool> SaveAllAsync(); 
 }

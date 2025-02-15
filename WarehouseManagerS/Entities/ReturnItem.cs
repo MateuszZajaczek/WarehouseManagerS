@@ -6,17 +6,17 @@ namespace WarehouseManager.API.Entities
     {
         public int ReturnItemId { get; set; }
 
-        public int ReturnId { get; set; } // Foreign key to Return
+        public int ReturnId { get; set; } 
 
-        public int OrderItemId { get; set; } // Foreign key to OrderItem
+        public int OrderItemId { get; set; } 
 
         public int Quantity { get; set; }
 
         public string Reason { get; set; }
 
-        public decimal RefundAmount { get; set; } // Quantity * UnitPrice
+        public decimal RefundAmount { get; set; } 
 
-        // Navigation Properties
+        // Relation
         [ForeignKey("ReturnId")]
         public Return Return { get; set; }
         [ForeignKey("OrderItemId")]

@@ -21,54 +21,35 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Przechwycono błąd:', error); // Debugging line
+        console.error('Przechwycono błąd:', error); 
+        switch (error.status) {
+          case 400:
+            this.toastr.error(error.error?.message || 'Błąd żądania', '400');
+            break;
 
-        if (error) {
-          switch (error.status) {
-            case 200: console.log("All good - 200");
-              break;
-            case 204: console.log("Everything works fine - 204");
-              break;
-            case 400:
-              if (error.error.errors) {
-                const modalStateErrors: string[] = [];
-                for (const key in error.error.errors) {
-                  if (error.error.errors[key]) {
-                    modalStateErrors.push(error.error.errors[key]);
-                  }
-                }
-                modalStateErrors.flat().forEach((errMsg) =>
-                  this.toastr.error(errMsg)
-                );
-                return throwError(() => modalStateErrors.flat());
-              } else if (typeof error.error === 'object') {
-                this.toastr.error('Błąd żądania', error.status.toString());
-              } else {
-                this.toastr.error(error.error, error.status.toString());
-              }
-              break;
-            case 401:
-              this.toastr.error('Brak autoryzacji 401', error.status.toString());
-              break;
-              case 403:
-              this.toastr.error('Brak autoryzacji 403', error.status.toString());
-              break;
-            case 404:
-              this.toastr.error('Nieznaleziono', error.status.toString());
-              // this.router.navigateByUrl('/not-found'); // do implementacji strona błędu w której nie znajdujemy określonej scieżki
-              break;
-            case 500:
-              const navigationExtras: NavigationExtras = {
-                state: { error: error.error },
-              };
-              this.router.navigateByUrl('/server-error', navigationExtras);
-              break;
-            default:
-              this.toastr.error('Coś poszło nie tak');
-              console.error(error);
-              break;
-          }
+          case 401:
+            this.toastr.error('Brak autoryzacji', '401');
+            break;
+
+          case 403:
+            this.toastr.error('Brak dostępu', '403');
+            break;
+
+          case 404:
+            this.toastr.error('Nie znaleziono zasobu', '404');
+            break;
+
+          case 500:
+            const navigationExtras: NavigationExtras = { state: { error: error.error } };
+            this.router.navigateByUrl('/server-error', navigationExtras);
+            break;
+
+          default:
+            this.toastr.error('Coś poszło nie tak');
+            console.error(error);
+            break;
         }
+
         return throwError(() => error);
       })
     );

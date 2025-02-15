@@ -6,8 +6,8 @@ namespace WarehouseManager.API.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IOrderRepository _orderRepository; // Order repository
-        private readonly IProductRepository _productRepository; // Product repository
+        private readonly IOrderRepository _orderRepository; 
+        private readonly IProductRepository _productRepository; 
         private readonly IInventoryTransactionRepository _inventoryTransactionRepository;
 
         public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, IInventoryTransactionRepository inventoryTransactionRepository)
@@ -17,19 +17,16 @@ namespace WarehouseManager.API.Services
             _inventoryTransactionRepository = inventoryTransactionRepository;
         }
 
-        // Create order method.
+
         public async Task<bool> CreateOrderAsync(Order order)
         {
-            // Calculate total amount
             decimal totalAmount = 0;
 
             foreach (var item in order.OrderItems)
             {
-                // Get product details
                 var product = await _productRepository.GetProductByIdAsync(item.ProductId);
                 if (product == null)
                 {
-                    // Handle product not found
                     return false;
                 }
 
@@ -40,21 +37,21 @@ namespace WarehouseManager.API.Services
                     return false;
                 }
 
-                // Subtract the stock immediately
+                // Subtract the stock if enough in stock
                 product.QuantityInStock -= item.Quantity;
                 _productRepository.Update(product);
 
-                item.UnitPrice = product.UnitPrice; // Capture unit price at order time
-                item.TotalPrice = item.Quantity * item.UnitPrice; // Calculate total price for item
+                item.UnitPrice = product.UnitPrice; 
+                item.TotalPrice = item.Quantity * item.UnitPrice; 
 
-                totalAmount += item.TotalPrice; // Accumulate total amount
+                totalAmount += item.TotalPrice; 
 
                 // Record inventory transaction
                 var transaction = new InventoryTransaction
                 {
                     ProductId = product.ProductId,
                     TransactionDate = DateTime.UtcNow,
-                    QuantityChange = -item.Quantity, // Physical stock deduction
+                    QuantityChange = -item.Quantity, 
                     TransactionType = "Zamówienie utworzone",
                     ReferenceId = order.OrderId,
                     Notes = $"Stworzono zamówienie. ID zamówienia: {order.OrderId}"
@@ -62,10 +59,10 @@ namespace WarehouseManager.API.Services
                 await _inventoryTransactionRepository.AddTransactionAsync(transaction);
             }
 
-            order.TotalAmount = totalAmount; // Set total amount for the order
-            order.OrderStatus = "W trakcie przygotowania"; // Set initial status to "In Progress"
+            order.TotalAmount = totalAmount; 
+            order.OrderStatus = "W trakcie przygotowania"; // default status 
 
-            await _orderRepository.AddOrderAsync(order); // Add order to repository
+            await _orderRepository.AddOrderAsync(order); 
 
             // Save changes
             var orderSaved = await _orderRepository.SaveAllAsync();
@@ -136,7 +133,6 @@ namespace WarehouseManager.API.Services
 
             if (order.OrderStatus != "W trakcie przygotowania")
             {
-                // Only "In Progress" orders can be accepted
                 return false;
             }
 
