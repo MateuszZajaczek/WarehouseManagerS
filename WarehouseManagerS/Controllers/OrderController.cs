@@ -3,11 +3,13 @@ using WarehouseManager.API.Entities;
 using WarehouseManager.API.Interfaces;
 using WarehouseManager.API.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace WarehouseManager.API.Controllers
 {
+    [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;

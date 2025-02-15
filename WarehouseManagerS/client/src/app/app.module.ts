@@ -3,44 +3,36 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { ProductService } from './_services/product.service';
 import { NavComponent } from './_components/nav/nav.component';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { AuthInterceptor } from './_interceptors/auth.interceptor';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ProductListComponent } from './_components/product-list/product-list.component';
 import { HomeComponent } from './_components/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
-/*import { RegisterComponent } from './_components/register/register.component';*/
 import { OrdersListComponent } from './_components/orders-list/orders-list.component';
 import { ReturnsListComponent } from './_components/returns-list/returns-list.component';
-import { UserDetailComponent } from './_components/user-detail/user-detail.component';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { provideToastr } from 'ngx-toastr';
 import { AdminRegisterComponent } from './_components/admin/register/register-form.component';
 import { AdminPanelComponent } from './_components/admin/admin-panel/admin-panel.component';
-import { AuthInterceptor } from './_interceptors/auth.interceptor';
 import { NewOrderFormComponent } from './_components/new-order-form/new-order-form.component';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { OrderDetailComponent } from './_components/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    /*    RegisterComponent,*/
     HomeComponent,
     OrdersListComponent,
     ReturnsListComponent,
-    UserDetailComponent,
     NavComponent,
     AdminRegisterComponent,
     AdminPanelComponent,
     NewOrderFormComponent,
-    UserDetailComponent,
-    OrderDetailComponent,
-
+    OrderDetailComponent
     ],
 
   imports: [
@@ -55,14 +47,12 @@ import { OrderDetailComponent } from './_components/order-detail/order-detail.co
     RouterLinkActive,
     CommonModule,
     BsDropdownModule.forRoot(),
-    
-
   ],
 
   exports:
   [NewOrderFormComponent],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    ProductService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   provideAnimations(),
   provideToastr({
     positionClass: 'toast-bottom-right'

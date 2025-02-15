@@ -23,9 +23,9 @@ interface OrderItem {
 export class NewOrderFormComponent implements OnInit {
   orderForm: FormGroup;
   products: Product[] = [];
-  totalAmount: number = 0;
+  totalAmount = 0;
   currentUser: User | null = null;
-  orderItems: OrderItem[] = []; // Tablica przechowująca dodane produkty
+  orderItems: OrderItem[] = [];
   private toastr = inject(ToastrService);
 
   constructor(
@@ -35,7 +35,6 @@ export class NewOrderFormComponent implements OnInit {
     private accountService: AccountService
   ) {
     this.orderForm = this.fb.group({
-      userName: [null, Validators.required],
       productId: [null, Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
     });
@@ -44,101 +43,70 @@ export class NewOrderFormComponent implements OnInit {
   ngOnInit(): void {
     this.loadProducts();
     this.currentUser = this.accountService.currentUser();
-    console.log(this.currentUser);
-    if (this.currentUser) {
-      this.orderForm.get('userName')?.setValue(this.currentUser.userName);
-    }
   }
 
-  loadProducts() {
+  loadProducts(): void {
     this.productService.getProducts().subscribe({
       next: (products) => (this.products = products),
-      error: (error) => console.log('Błąd podczas ładowania produktów:', error),
+      error: () => this.toastr.error('Błąd podczas ładowania produktów', 'Błąd'),
     });
   }
 
-  addOrderItem() {
-    const productId = Number(this.orderForm.get('productId')?.value);
-    const quantity = this.orderForm.get('quantity')?.value;
-    const product = this.products.find((p) => p.productId === productId);
+  addOrderItem(): void {
+    const { productId, quantity } = this.orderForm.value;
+    const product = this.products.find((p) => p.productId === Number(productId));
 
-    if (product && quantity > 0) {
-      const unitPrice = product.unitPrice;
-      const totalPrice = unitPrice * quantity;
+    if (!product || quantity <= 0) return;
 
-      const orderItem: OrderItem = {
-        productId: productId,
-        productName: product.productName,
-        quantity: quantity,
-        unitPrice: unitPrice,
-        totalPrice: totalPrice,
-      };
+    this.orderItems.push({
+      productId,
+      productName: product.productName,
+      quantity,
+      unitPrice: product.unitPrice,
+      totalPrice: product.unitPrice * quantity,
+    });
 
-      this.orderItems.push(orderItem);
-      this.updateTotalAmount();
-
-      // Resetuj pola formularza
-      this.orderForm.get('productId')?.setValue(null);
-      this.orderForm.get('quantity')?.setValue(1);
-    }
+    this.updateTotalAmount();
+    this.orderForm.patchValue({ productId: null, quantity: 1 });
   }
 
-  updateTotalAmount() {
-    this.totalAmount = this.orderItems.reduce(
-      (sum, item) => sum + item.totalPrice,
-      0
-    );
+  updateTotalAmount(): void {
+    this.totalAmount = this.orderItems.reduce((sum, item) => sum + item.totalPrice, 0);
   }
 
-  editOrderItem(index: number) {
-    const item = this.orderItems[index];
-    // Ustaw wartości formularza na wartości wybranego produktu
-    this.orderForm.get('productId')?.setValue(item.productId);
-    this.orderForm.get('quantity')?.setValue(item.quantity);
-    // Usuń produkt z listy, aby można go było ponownie dodać po edycji
+  editOrderItem(index: number): void {
+    this.orderForm.patchValue(this.orderItems[index]);
+    this.removeOrderItem(index);
+  }
+
+  removeOrderItem(index: number): void {
     this.orderItems.splice(index, 1);
     this.updateTotalAmount();
   }
 
-  removeOrderItem(index: number) {
-    this.orderItems.splice(index, 1);
-    this.updateTotalAmount();
-  }
-
-  submitOrder() {
-    if (this.orderItems.length === 0) {
-      return;
-    }
+  submitOrder(): void {
+    if (!this.orderItems.length) return;
 
     const order = {
       userId: this.currentUser?.userId || 0,
-      userName: this.orderForm.get('userName')?.value,
       totalAmount: this.totalAmount,
-      orderStatus: 'Pending',
-      orderItems: this.orderItems.map((item) => ({
-        productId: item.productId,
-        quantity: item.quantity,
-        unitPrice: item.unitPrice,
-        totalPrice: item.totalPrice,
+      orderItems: this.orderItems.map(({ productId, quantity, unitPrice, totalPrice }) => ({
+        productId,
+        quantity,
+        unitPrice,
+        totalPrice,
       })),
     };
 
-    // Single call to createOrder
     this.orderService.createOrder(order).subscribe({
-      next: (res) => {
-        // Show a success toast
+      next: () => {
         this.toastr.success('Zamówienie utworzono pomyślnie!', 'Sukces');
-
-        // Reset form & item list
         this.orderForm.reset();
         this.orderItems = [];
         this.totalAmount = 0;
-        this.orderForm.get('quantity')?.setValue(1);
+        this.orderForm.patchValue({ quantity: 1 });
       },
-      error: (error) => {
-        this.toastr.error('Nie udało się utworzyć zamówienia', 'Błąd');
-      },
+      error: () => this.toastr.error('Nie udało się utworzyć zamówienia', 'Błąd'),
     });
   }
-
 }

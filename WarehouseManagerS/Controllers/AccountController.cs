@@ -11,6 +11,8 @@ using WarehouseManager.API.Interfaces;
 
 namespace WarehouseManager.API.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class AccountController : BaseApiController
     {
         private readonly DataContext _context;
@@ -49,8 +51,8 @@ namespace WarehouseManager.API.Controllers
             };
             return Ok(userDto);
         }
-        // Different approach to authorization in registering new acc so changing policy doesn't affect this one.
-        [Authorize(Roles = "Admin")]
+
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("register")] // POST account register
 
         public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)

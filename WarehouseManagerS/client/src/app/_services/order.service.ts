@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class OrderService {
-  private apiUrl = 'https://localhost:5133/orders';
+  private apiUrl = 'https://localhost:5133/api/orders';
 
   constructor(private http: HttpClient) { }
 
@@ -15,14 +15,9 @@ export class OrderService {
     return this.http.get<Order[]>(this.apiUrl);
   }
 
-  //createOrder(order: any): Observable<{ message: string }> {
-  // return this.http.post(this.apiUrl, order);
-  // }
-
   createOrder(order: any): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(this.apiUrl, order);
   }
-
 
   acceptOrder(orderId: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/${orderId}/accept`, {}, {

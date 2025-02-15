@@ -9,7 +9,7 @@ import { map } from 'rxjs';
 export class AccountService {
 
   private http = inject(HttpClient);
-  baseUrl = 'https://localhost:5133/';
+  baseUrl = 'https://localhost:5133/api/';
   currentUser = signal<User | null>(null);
 
   constructor() {
@@ -24,10 +24,8 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map(user => {
         if (user && user.token) {
-          // Zapisz token do localStorage
-          localStorage.setItem('token', user.token);
-          // Zapisz użytkownika do localStorage
-          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', user.token); // Saving token in localStorage
+          localStorage.setItem('user', JSON.stringify(user)); // Saving user to localStorage
           this.currentUser.set(user);
         }
       })
@@ -39,7 +37,7 @@ export class AccountService {
   }
 
   logout() {
-    // Usuwanie tokenu i użytkownika z localStorage
+    // Delete everything from localStorage on logout
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.currentUser.set(null);

@@ -1,4 +1,3 @@
-/* Dot styles */
 .dot {
   display: inline-block;
   width: 8px;
@@ -8,28 +7,26 @@
   vertical-align: middle;
 }
 
-/* Color-coded classes for each status */
+
 .dot-canceled {
   background-color: gray;
 }
 
 .dot-complete {
-  background-color: #28a745; /* Green */
+  background-color: #28a745; 
 }
 
-/* For 'In Progress', we add a blinking effect */
 .dot-inprogress {
-  background-color: gold; /* or any color you like for 'in progress' */
+  background-color: gold; 
   animation: blink 1s infinite alternate;
 }
 
-/* The blinking animation keyframes */
 @keyframes blink {
   0% {
     opacity: 1;
   }
 
   100% {
-    opacity: 0;
+    opacity: 0.2;
   }
 }

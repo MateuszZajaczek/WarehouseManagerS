@@ -34,6 +34,7 @@ namespace WarehouseManagerS.Controllers
         }
 
         // Get product by unique ID
+        [Authorize(Policy = "RequireStaffRole")]
         [HttpGet("{id}")]
         public async Task<ProductDto?> GetProductByIdAsync(int id)
         {

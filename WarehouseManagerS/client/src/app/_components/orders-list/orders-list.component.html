@@ -33,14 +33,13 @@
     </div>
   </div>
 
-  <!-- The table remains the same, except you iterate over filteredOrders() -->
   <table class="table table-striped">
     <thead>
       <tr>
         <th>ID zamówienia</th>
         <th>Użytkownik</th>
         <th>Data</th>
-        <!-- If user is Admin, show totalAmount -->
+        <!-- Only Admin can see totalAmount -->
         @if (accountService.currentUser()?.role === 'Admin') {
         <th>Łączna suma</th>
         }
