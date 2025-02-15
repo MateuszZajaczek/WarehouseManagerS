@@ -15,26 +15,26 @@ import { OrderDetailComponent } from './_components/order-detail/order-detail.co
 
 export const routes: Routes = [
 
-  { path: '', component: HomeComponent }, // Ścieżka do strony głównej
+  { path: '', component: HomeComponent }, // MainPage 
   // Logged in users.
   {
     path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
-      { path: 'products', component: ProductListComponent }, // Ścieżka do listy przedmiotów
-      { path: 'orders', component: OrdersListComponent }, // Ścieżka do listy zamówień
-      { path: 'returns', component: ReturnsListComponent }, // Ścieżka do listy zwrotów
-      { path: 'orders/:id', component: OrderDetailComponent}, // Ścieżka do szczegółów zamówienia
+      { path: 'products', component: ProductListComponent }, // Products
+      { path: 'orders', component: OrdersListComponent }, // Orders
+      { path: 'returns', component: ReturnsListComponent }, // Returns
+      { path: 'orders/:id', component: OrderDetailComponent}, // Details
     ]
   },
 
   // Admin only
-      { path: 'register', component: AdminRegisterComponent, canActivate: [adminGuard] }, // Ścieżka do rejestracji administratora
-      { path: 'AdminPanel', component: AdminPanelComponent, canActivate: [adminGuard] }, // Ścieżka do panelu administratora
-      { path: 'neworder', component: NewOrderFormComponent, canActivate: [adminGuard] },
+      { path: 'register', component: AdminRegisterComponent, canActivate: [adminGuard] }, // Register
+      { path: 'AdminPanel', component: AdminPanelComponent, canActivate: [adminGuard] }, // AdminPanel - not implemented yet
+      { path: 'neworder', component: NewOrderFormComponent, canActivate: [adminGuard] }, //  NewOrder
   // Everyone
-      { path: '**', component: HomeComponent, pathMatch: 'full' }, //Ścieżka do strony głównej
+      { path: '**', component: HomeComponent, pathMatch: 'full' }, // Redirect to MainPage, for any address.
 
 ];
 

@@ -40,11 +40,7 @@ namespace WarehouseManagerS
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IInventoryTransactionRepository, InventoryTransactionRepository>();
-
-            // Register other services and repositories as needed
-
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //  AutoMapper, Delete or useful??? // Considerating
-
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //  AutoMapper, Delete or useful??? // Considerating //  Maybe in future
 
             // Authentication method with TokenKey JWT
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -56,12 +52,10 @@ namespace WarehouseManagerS
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+                        //RoleClaimType = "role"
                     };
                 });
-
-
-
 
             // Authorization method based on roles.
             builder.Services.AddAuthorization(options =>
@@ -73,15 +67,11 @@ namespace WarehouseManagerS
 
             var app = builder.Build();
 
-
-
             // Configure the HTTP request pipeline
-            app.UseMiddleware<ExceptionMiddleware>();
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200")); //  CORS added for policy rules.
-
+            app.UseMiddleware<ExceptionMiddleware>();  // Errors handling middleware
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200")); //  CORS added for policy rules to avoid this https problems.
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
             app.UseRouting();
             // Authentication, then Authorization.
             app.UseAuthentication();

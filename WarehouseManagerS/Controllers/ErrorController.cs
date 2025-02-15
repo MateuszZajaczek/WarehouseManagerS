@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WarehouseManager.API.Controllers
 {
-    public class BuggyController(DataContext context) : BaseApiController
+    public class ErrorController(DataContext context) : BaseApiController
     {
         
         [Authorize]
         [HttpGet("auth")]
         public ActionResult<string> GetAuth()
         {
-            return "Secret Text";
+            return "Autentykacja";
         }
 
         [HttpGet("not-found")]
@@ -22,14 +22,14 @@ namespace WarehouseManager.API.Controllers
 
             if (thing == null) return NotFound("Nie znaleziono produktu");
 
-            return "Secret Text";
+            return "";
         }
 
         [HttpGet("server-error")]
 
         public ActionResult<AppUser> GetServerError()
         {
-            var thing = context.Users.Find(-1) ?? throw new Exception("Server Error");
+            var thing = context.Users.Find(-1) ?? throw new Exception("Błąd serwera");
             return thing;   
         }
 
@@ -37,7 +37,7 @@ namespace WarehouseManager.API.Controllers
 
         public ActionResult<string> GetBadRequest()
         {
-            return BadRequest("Błąd żadania, spróbuj czegoś innego");
+            return BadRequest("Błąd żądania, spróbuj czegoś innego");
         }
     }
 }

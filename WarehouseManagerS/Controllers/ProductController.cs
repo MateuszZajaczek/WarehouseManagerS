@@ -3,18 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using WarehouseManager.API.Dto;
 using WarehouseManager.API.Interfaces;
 using WarehouseManager.API.Controllers;
+using WarehouseManager.API.Entities;
 
 
 namespace WarehouseManagerS.Controllers
 {
-    //[Authorize(Policy = "RequireStaffRole")]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
 
     public class ProductsController(IProductRepository productRepository) : BaseApiController
     {
         // Get all products
+        [Authorize(Policy = "RequireStaffRole")]
         [HttpGet]
+
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
             var products = await productRepository.GetProductsAsync();
@@ -31,6 +34,7 @@ namespace WarehouseManagerS.Controllers
         }
 
         // Get product by unique ID
+        [Authorize(Policy = "RequireStaffRole")]
         [HttpGet("{id}")]
         public async Task<ProductDto?> GetProductByIdAsync(int id)
         {
@@ -51,66 +55,24 @@ namespace WarehouseManagerS.Controllers
                 UnitPrice = product.UnitPrice,
             };
         }
-        // NotImplemented yet.
 
+        // NotImplementedYet. /////////////////////////////////
 
+        [HttpPost]
+        public async Task<ActionResult<ProductDto>> AddProduct(Product Product)
+        {
+            throw new NotImplementedException();
+        }
 
-        //[HttpPost]
-        //public async Task<ActionResult<Product>> AddProduct(Product Product)
-        //{
-        //    productRepository.Products.Add(Product);
-        //    await _context.SaveChangesAsync();
-        //    return CreatedAtAction(nameof(GetProduct), new { id = Product.ProductId }, Product);
-        //}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            throw new NotImplementedException();
+        }
 
-
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> EditProduct(int id, Product Product)
-        //{
-        //    if (id != Product.ProductId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(Product).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ProductExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteProduct(int id)
-        //{
-        //    var Product = await _context.Products.FindAsync(id);
-        //    if (Product == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Products.Remove(Product);
-        //    await _context.SaveChangesAsync();
-
-        //    return NoContent();
-        //}
-
-        //private bool ProductExists(int id)
-        //{
-        //    return _context.Products.Any(e => e.ProductId == id);
-        //}
+        private bool ProductExists(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

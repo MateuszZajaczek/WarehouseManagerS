@@ -37,7 +37,7 @@
         accountService.currentUser()?.userName }}</a>
       <div *dropdownMenu class="dropdown-menu">
         <a class="dropdown-item">Edytuj profil</a>
-        <!-- ADMIN DROPDOWN MENU START-->
+        <!-- Only ADMIN DROPDOWN MENU START-->
         @if(accountService.currentUser()?.role === 'Admin')
         {
         <a class="dropdown-item" routerLink="/register">Rejestruj użytkownika</a>

@@ -16,7 +16,6 @@ export class NavComponent {
   private toastr = inject(ToastrService);
   model: any = {};
 
-
   login() {
     this.accountService.login(this.model).subscribe({
       next: _ => {

@@ -25,10 +25,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (error) {
           switch (error.status) {
-            //case 200: console.log("All good - 200");
-            //  break;
-            //case 204: console.log("Everything works fine - 204");
-            //  break;
+            case 200: console.log("All good - 200");
+              break;
+            case 204: console.log("Everything works fine - 204");
+              break;
             case 400:
               if (error.error.errors) {
                 const modalStateErrors: string[] = [];
@@ -55,7 +55,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
             case 404:
               this.toastr.error('Nieznaleziono', error.status.toString());
-              // this.router.navigateByUrl('/not-found');
+              // this.router.navigateByUrl('/not-found'); // do implementacji strona błędu w której nie znajdujemy określonej scieżki
               break;
             case 500:
               const navigationExtras: NavigationExtras = {
@@ -63,10 +63,10 @@ export class ErrorInterceptor implements HttpInterceptor {
               };
               this.router.navigateByUrl('/server-error', navigationExtras);
               break;
-            //default:
-            //  this.toastr.error('Coś poszło nie tak');
-            //  console.error(error);
-            //  break;
+            default:
+              this.toastr.error('Coś poszło nie tak');
+              console.error(error);
+              break;
           }
         }
         return throwError(() => error);

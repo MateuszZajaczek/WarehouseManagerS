@@ -1,7 +1,7 @@
 export interface OrderItem {
-  orderItemId?: number; // Optional when creating a new order item
+  orderItemId?: number; 
   productId: number;
-  productName?: string; // Optional, for display purposes
+  productName?: string; 
   quantity: number;
   unitPrice: number;
   totalPrice: number;
