@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
-using WarehouseManager.API.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 using WarehouseManager.API.Data;
-using WarehouseManager.API.Dto;
-using WarehouseManager.API.Entities;
 
+// Future extension, for any admin things & inserting or withdrawing items from database.
 namespace WarehouseManager.API.Controllers
 {
     [ApiController]

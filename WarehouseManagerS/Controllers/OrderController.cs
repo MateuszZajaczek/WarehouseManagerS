@@ -2,6 +2,7 @@
 using WarehouseManager.API.Entities;
 using WarehouseManager.API.Interfaces;
 using WarehouseManager.API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WarehouseManager.API.Controllers
 {
@@ -16,6 +17,7 @@ namespace WarehouseManager.API.Controllers
             _orderService = orderService;
         }
         // Get all orders.
+        [Authorize(Policy = "RequireStaffRole")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders()
         {
@@ -45,6 +47,7 @@ namespace WarehouseManager.API.Controllers
         }
 
         // Get the order by unique ID
+        [Authorize(Policy = "RequireStaffRole")]
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
@@ -54,7 +57,8 @@ namespace WarehouseManager.API.Controllers
                 return NotFound();
             }
 
-            // Manual mapping to avoid reference loop.
+            // Manual mapping to avoid reference loop |
+            // Stayed with this solution to keep higher control instead of using automapper.
             var orderDto = new OrderDto
             {
                 OrderId = order.OrderId,
@@ -78,10 +82,9 @@ namespace WarehouseManager.API.Controllers
             return Ok(orderDto);
         }
 
-
         // Create new order
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost]
-
         public async Task<ActionResult> CreateOrder(OrderDto orderDto)
         {
             var order = new Order
@@ -103,6 +106,7 @@ namespace WarehouseManager.API.Controllers
         }
 
         // Cancel the order
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("{orderId}/cancel")]
         public async Task<IActionResult> CancelOrder(int orderId)
         {
@@ -114,8 +118,8 @@ namespace WarehouseManager.API.Controllers
             return Ok("Order canceled successfully.");
         }
 
-
         // Accept the order
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("{id}/accept")]
         public async Task<ActionResult> AcceptOrder(int id)
         {

@@ -6,7 +6,7 @@ namespace WarehouseManager.API.Dto
     public class RegisterDto
     {
         [Required]
-        [MaxLength(25, ErrorMessage = "Username must be less than 25 characters")]
+        [MaxLength(25, ErrorMessage = "Nazwa użytkownik nie może być dłuższa niż 25 znaków")]
         public string Username { get; set; }
 
         [Required]

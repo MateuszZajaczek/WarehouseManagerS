@@ -89,7 +89,7 @@ namespace WarehouseManager.API.Services
 
             if (order.OrderStatus != "W trakcie przygotowania")
             {
-                // Only "In Progress" orders can be canceled
+                // Only "In Progres" orders can be canceled
                 return false;
             }
 
@@ -99,7 +99,7 @@ namespace WarehouseManager.API.Services
                 if (product == null)
                     return false; // Product not found
 
-                // Add the stock back
+                // When Order is canceled, +items back to stock
                 product.QuantityInStock += item.Quantity;
                 _productRepository.Update(product);
 

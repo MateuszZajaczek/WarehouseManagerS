@@ -49,7 +49,7 @@ namespace WarehouseManager.API.Controllers
             };
             return Ok(userDto);
         }
-
+        // Different approach to authorization in registering new acc so changing policy doesn't affect this one.
         [Authorize(Roles = "Admin")]
         [HttpPost("register")] // POST account register
 

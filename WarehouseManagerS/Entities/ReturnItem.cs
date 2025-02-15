@@ -14,7 +14,7 @@ namespace WarehouseManager.API.Entities
 
         public string Reason { get; set; }
 
-        public decimal RefundAmount { get; set; } // Calculated as Quantity * UnitPrice
+        public decimal RefundAmount { get; set; } // Quantity * UnitPrice
 
         // Navigation Properties
         [ForeignKey("ReturnId")]

@@ -32,10 +32,9 @@ namespace WarehouseManager.API.Repositories
 
         public async Task<Order?> GetOrderByIdAsync(int id)
         {
-            // Get order by ID with User, OrderItems, and Products for each OrderItem
             return await _context.Orders
-                .Include(o => o.User) // Add user to order in DB
-                .Include(o => o.OrderItems) // Add position to order in DB
+                .Include(o => o.User) // Add user to order
+                .Include(o => o.OrderItems) // Add position to order
                     .ThenInclude(oi => oi.Product) // Add product to every position in order.
                 .FirstOrDefaultAsync(o => o.OrderId == id);
         }

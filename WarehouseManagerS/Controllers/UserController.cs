@@ -5,6 +5,8 @@ using WarehouseManager.API.Data;
 using WarehouseManager.API.Entities;
 using WarehouseManager.API.Controllers;
 
+// Future Feature for listing existing users.
+
 namespace WarehouseManager.Controllers
 {
     [ApiController]
