@@ -17,7 +17,6 @@ public class DataContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Configure AppUser
         modelBuilder.Entity<AppUser>(entity =>
         {
             entity.Property(e => e.Role)
@@ -25,7 +24,6 @@ public class DataContext : DbContext
                 .IsRequired();
         });
 
-        // Configure Product
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(e => e.ProductId);
@@ -37,14 +35,12 @@ public class DataContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        // Configure Category
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.CategoryId);
             entity.Property(e => e.CategoryName).IsRequired();
         });
 
-        // Configure Order
         modelBuilder.Entity<Order>(entity =>
         {
             entity.HasKey(e => e.OrderId);
@@ -58,7 +54,6 @@ public class DataContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // Configure OrderItem
         modelBuilder.Entity<OrderItem>(entity =>
         {
             entity.HasKey(e => e.OrderItemId);
@@ -74,7 +69,6 @@ public class DataContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        // Configure Return
         modelBuilder.Entity<Return>(entity =>
         {
             entity.HasKey(e => e.ReturnId);
@@ -92,7 +86,6 @@ public class DataContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // Configure ReturnItem
         modelBuilder.Entity<ReturnItem>(entity =>
         {
             entity.HasKey(e => e.ReturnItemId);
@@ -107,7 +100,6 @@ public class DataContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        // Configure InventoryTransaction
         modelBuilder.Entity<InventoryTransaction>(entity =>
         {
             entity.HasKey(e => e.TransactionId);

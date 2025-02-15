@@ -11,7 +11,6 @@ namespace WarehouseManagerS.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-
     public class ProductsController(IProductRepository productRepository) : BaseApiController
     {
         // Get all products
@@ -26,7 +25,7 @@ namespace WarehouseManagerS.Controllers
                 ProductId = p.ProductId,
                 ProductName = p.ProductName,
                 QuantityInStock = p.QuantityInStock,
-                CategoryName = p.Category.CategoryName, // Assuming Category has a Name property
+                CategoryName = p.Category.CategoryName, 
                 UnitPrice = p.UnitPrice,
             }).ToList();
 

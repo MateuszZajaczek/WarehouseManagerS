@@ -7,7 +7,7 @@ namespace WarehouseManager.API.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly DataContext _context; // Database context
+        private readonly DataContext _context; 
 
         public OrderRepository(DataContext context)
         {
@@ -16,8 +16,8 @@ namespace WarehouseManager.API.Repositories
 
         public async Task<Order> AddOrderAsync(Order order)
         {
-            await _context.Orders.AddAsync(order); // Add new order to context
-            return order; // Return the added order
+            await _context.Orders.AddAsync(order); 
+            return order; 
         }
 
         public async Task<IEnumerable<Order>> GetAllAsync()
@@ -42,12 +42,11 @@ namespace WarehouseManager.API.Repositories
 
         public void Update(Order order)
         {
-            _context.Entry(order).State = EntityState.Modified; // Mark order as modified
+            _context.Entry(order).State = EntityState.Modified; // Mark order as modified (need to update before save within one instance)
         }
 
         public async Task<bool> SaveAllAsync()
         {
-            // Save changes and return true if successful
             return await _context.SaveChangesAsync() > 0;
         }
     }

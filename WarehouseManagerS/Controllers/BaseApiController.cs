@@ -6,6 +6,5 @@ namespace WarehouseManager.API.Controllers
     [Route("[Controller]")]
     public class BaseApiController : ControllerBase
     {
-
     }
 }

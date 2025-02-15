@@ -12,11 +12,11 @@ public class InventoryTransactionRepository : IInventoryTransactionRepository
 
     public async Task AddTransactionAsync(InventoryTransaction transaction)
     {
-        await _context.InventoryTransactions.AddAsync(transaction); // Add transaction
+        await _context.InventoryTransactions.AddAsync(transaction); 
     }
 
     public async Task<bool> SaveAllAsync()
     {
-        return await _context.SaveChangesAsync() > 0; // Save changes
+        return await _context.SaveChangesAsync() > 0; 
     }
 }

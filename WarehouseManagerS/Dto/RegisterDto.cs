@@ -17,6 +17,5 @@ namespace WarehouseManager.API.Dto
 
         [Required]
         public Role Role { get; set; }
-
     }
 }

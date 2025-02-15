@@ -17,7 +17,7 @@ public class AppUser
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    // Navigation Properties
+    // Relation
     public ICollection<Order> Orders { get; set; }
     public ICollection<Return> Returns { get; set; }
 }

@@ -53,8 +53,7 @@ namespace WarehouseManager.API.Controllers
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpPost("register")] // POST account register
-
+        [HttpPost("register")] 
         public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
         {
             Console.WriteLine($"Received payload: {registerDto}");

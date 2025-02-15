@@ -3,7 +3,6 @@ using WarehouseManager.API.Data;
 using WarehouseManager.API.Entities;
 using WarehouseManager.API.Interfaces;
 
-
 namespace WarehouseManager.API.Repositories
 {
     public class ProductRepository(DataContext context) : IProductRepository
@@ -11,10 +10,9 @@ namespace WarehouseManager.API.Repositories
         public async Task<Product?> GetProductByIdAsync(int id)
         {
             return await context.Products
-                .Include(p => p.Category) // Dołączenie kategorii do produktu
+                .Include(p => p.Category) // Add Category to Product
                 .FirstOrDefaultAsync(p => p.ProductId == id);
         }
-
 
         public async Task<Product?> GetProductByNameAsync(string productname)
         {

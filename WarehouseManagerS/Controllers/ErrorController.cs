@@ -7,7 +7,6 @@ namespace WarehouseManager.API.Controllers
 {
     public class ErrorController(DataContext context) : BaseApiController
     {
-        
         [Authorize]
         [HttpGet("auth")]
         public ActionResult<string> GetAuth()
@@ -26,7 +25,6 @@ namespace WarehouseManager.API.Controllers
         }
 
         [HttpGet("server-error")]
-
         public ActionResult<AppUser> GetServerError()
         {
             var thing = context.Users.Find(-1) ?? throw new Exception("Błąd serwera");
@@ -34,7 +32,6 @@ namespace WarehouseManager.API.Controllers
         }
 
         [HttpGet("bad-request")]
-
         public ActionResult<string> GetBadRequest()
         {
             return BadRequest("Błąd żądania, spróbuj czegoś innego");
