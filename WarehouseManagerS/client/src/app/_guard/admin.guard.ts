@@ -11,7 +11,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
   if (user && user.role === 'Admin') {
     return true;
   } else {
-    toastr.error('Access denied. Admins only.');
+    toastr.error('Odmowa dostępu. Tylko admin');
     return false;
   }
 };

@@ -24,12 +24,12 @@ export class AdminRegisterComponent {
 
   register() {
     if (this.registerForm.invalid) {
-      this.toastr.error('Please fill all required fields correctly.');
+      this.toastr.error('Proszę uzupełnić wszystkie pola.');
       return;
     }
     this.accountService.register(this.registerForm.value).subscribe({
       next: () => {
-        this.toastr.success('User registered successfully');
+        this.toastr.success('Sukces. Użytkownik zarejestrowany');
         this.registerForm.reset();
       },
       error: (error) => {

@@ -6,7 +6,7 @@ using WarehouseManager.API.DTOs;
 namespace WarehouseManager.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -81,6 +81,7 @@ namespace WarehouseManager.API.Controllers
 
         // Create new order
         [HttpPost]
+
         public async Task<ActionResult> CreateOrder(OrderDto orderDto)
         {
             var order = new Order

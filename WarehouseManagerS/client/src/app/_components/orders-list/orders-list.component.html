@@ -46,7 +46,10 @@
         }
         <th>Status</th>
         <th>Szczegóły</th>
+        @if (accountService.currentUser()?.role === 'Admin') {
         <th>Akcje</th>
+        }
+
       </tr>
     </thead>
     <tbody>
@@ -75,22 +78,17 @@
                   [disabled]="order.orderStatus !== 'W trakcie przygotowania'">
             Gotowe
           </button>
-          }
-
           <!-- Cancel Button -->
-          @if (accountService.currentUser()?.role === 'Admin') {
           <button class="btn btn-danger btn-sm"
                   type="button"
                   (click)="cancelOrder(order.orderId!)"
                   [disabled]="
         order.orderStatus === 'Anulowane' ||
-        order.orderStatus !== 'W trakcie przygotowania'
-      ">
+        order.orderStatus !== 'W trakcie przygotowania'">
             Anuluj
           </button>
           }
         </td>
-
       </tr>
     </tbody>
   </table>

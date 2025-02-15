@@ -8,6 +8,7 @@ using WarehouseManager.API.Interfaces;
 using WarehouseManager.API.Services;
 using WarehouseManager.API.Repositories;
 using System.Text.Json.Serialization;
+using WarehouseManager.API.Entities;
 
 
 namespace WarehouseManagerS
