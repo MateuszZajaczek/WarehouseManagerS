@@ -4,6 +4,6 @@ namespace WarehouseManager.API.Interfaces
 {
     public interface ITokenService
     {
-        string CreateToken(AppUser user);
+        string CreateToken(User user);
     }
 }

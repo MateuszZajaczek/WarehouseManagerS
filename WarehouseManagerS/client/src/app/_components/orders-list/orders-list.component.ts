@@ -30,9 +30,7 @@ export class OrdersListComponent implements OnInit {
     });
   }
 
-  // The method returning the filtered list
   filteredOrders(): Order[] {
-    // Start with full list
     let result = this.orders;
 
     // Filter by userName if filterUser is not empty
@@ -44,11 +42,9 @@ export class OrdersListComponent implements OnInit {
     }
 
     // Filter by date if filterDate is not empty
-    // filterDate is an ISO date string if using <input type="date">
     if (this.filterDate) {
       result = result.filter(order => {
         if (!order.orderDate) {
-          // If there's no date, it certainly doesn't match filterDate
           return false;
         }
         const orderDateStr = new Date(order.orderDate).toISOString().slice(0, 10);
@@ -73,7 +69,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   acceptOrder(orderId: number): void {
-    // Optionally confirm before accepting
+    // check if it's not accident
     if (!confirm(`Czy na pewno chcesz wysłać zamówienie #${orderId}?`)) {
       return;
     }

@@ -53,7 +53,6 @@ namespace WarehouseManagerS
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
-                        //RoleClaimType = "role"
                     };
                 });
 
@@ -67,19 +66,15 @@ namespace WarehouseManagerS
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline
             app.UseMiddleware<ExceptionMiddleware>();  // Errors handling middleware
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200")); //  CORS added for policy rules to avoid this https problems.
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200")); //  CORS added for policy rules to avoid https problems.
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            // Authentication, then Authorization.
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Mapping the Controllers. Must have.
             app.MapControllers();
-            // Routing for controllers.
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

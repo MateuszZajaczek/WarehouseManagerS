@@ -19,6 +19,8 @@ namespace WarehouseManager.API.Controllers
             _orderService = orderService;
         }
         // Get all orders.
+        // Manual mapping to avoid reference loop |
+        // Stayed with this solution to keep higher control instead of using automapper.
         [Authorize(Policy = "RequireStaffRole")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders()
@@ -59,8 +61,6 @@ namespace WarehouseManager.API.Controllers
                 return NotFound();
             }
 
-            // Manual mapping to avoid reference loop |
-            // Stayed with this solution to keep higher control instead of using automapper.
             var orderDto = new OrderDto
             {
                 OrderId = order.OrderId,

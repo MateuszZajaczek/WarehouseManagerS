@@ -22,14 +22,14 @@ namespace WarehouseManager.Controllers
         }
         // Get all users.
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
             return users;
         }
         // Get user by specific ID.
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
             return await _context.Users.FindAsync(id);
         }

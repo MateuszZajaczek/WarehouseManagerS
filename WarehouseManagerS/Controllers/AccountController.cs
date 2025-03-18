@@ -26,7 +26,7 @@ namespace WarehouseManager.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+        public async Task<ActionResult<User>> Login(LoginDto loginDto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.UserName);
 
@@ -54,13 +54,13 @@ namespace WarehouseManager.API.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("register")] 
-        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<User>> Register(RegisterDto registerDto)
         {
             Console.WriteLine($"Received payload: {registerDto}");
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
             using var hmac = new HMACSHA512();
 
-            var user = new AppUser
+            var user = new User
             {
                 UserName = registerDto.Username.ToLower(),
                 Email = registerDto.Email,

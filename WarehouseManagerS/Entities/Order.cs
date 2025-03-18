@@ -18,7 +18,7 @@ namespace WarehouseManager.API.Entities
 
         // Relation
         [ForeignKey("UserId")]
-        public AppUser User { get; set; }
+        public User User { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
     }
 }
