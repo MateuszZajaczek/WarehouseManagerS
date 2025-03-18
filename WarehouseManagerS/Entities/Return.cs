@@ -22,7 +22,7 @@ namespace WarehouseManager.API.Entities
         [ForeignKey("OrderId")]
         public Order Order { get; set; }
         [ForeignKey("UserId")]
-        public AppUser User { get; set; }
+        public User User { get; set; }
         public ICollection<ReturnItem> ReturnItems { get; set; }
     }
 }

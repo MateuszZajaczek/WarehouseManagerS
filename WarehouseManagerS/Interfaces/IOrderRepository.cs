@@ -6,7 +6,6 @@ namespace WarehouseManager.API.Interfaces
     {
         Task<bool> SaveAllAsync(); 
         void Update(Order order); 
-
         Task<IEnumerable<Order>> GetAllAsync(); 
         Task<Order> GetOrderByIdAsync(int id); 
         Task<Order> AddOrderAsync(Order order); 
